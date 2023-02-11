@@ -2,7 +2,7 @@ import React from "react";
 
 const Nav = () => {
   return (
-    <div className="container-fluid border-bottom bg-white">
+    <div className="container-fluid border-bottom bg-white fixed-top">
       <nav class="navbar">
         <div class="container p-0">
           <div className="d-flex justify-content-start align-items-center">
@@ -13,7 +13,7 @@ const Nav = () => {
                 height="40"
               />
             </a>
-            <form role="search">
+            <form role="search" className="d-none d-sm-block">
               <div class="input-group border border-secondary rounded p-0 m-0">
                 <input
                   type="text"
