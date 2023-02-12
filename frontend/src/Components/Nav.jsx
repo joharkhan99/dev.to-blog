@@ -1,4 +1,5 @@
 import React from "react";
+import { Link } from "react-router-dom";
 
 const Nav = () => {
   return (
@@ -6,13 +7,13 @@ const Nav = () => {
       <nav class="navbar">
         <div class="container p-0">
           <div className="d-flex justify-content-start align-items-center">
-            <a class="navbar-brand" href="a">
+            <Link class="navbar-brand" to="/">
               <img
                 src={require("../assets/logo.png")}
                 alt="Bootstrap"
                 height="40"
               />
-            </a>
+            </Link>
             <form role="search" className="d-none d-sm-block">
               <div class="input-group border border-secondary rounded p-0 m-0">
                 <input
@@ -43,9 +44,9 @@ const Nav = () => {
           </div>
 
           <div className="d-flex justify-content-end align-items-center gap-2">
-            <button type="button" class="btn btn-outline-primary fw-bold">
+            <Link to="/new" class="btn btn-outline-primary fw-bold">
               Create Post
-            </button>
+            </Link>
             <a
               href="as"
               className="btn btn-outline-primary border-white position-relative"
@@ -89,15 +90,16 @@ const Nav = () => {
               </ul>
             </div>
 
-            {/* <a
-              href="as"
+            <Link
+              to="/login"
               className="btn btn-outline-primary border-white text-dark"
             >
               Login
-            </a>
-            <button type="button" class="btn btn-outline-primary fw-bold">
+            </Link>
+
+            <Link to="/signup" class="btn btn-outline-primary fw-bold">
               Create account
-            </button> */}
+            </Link>
           </div>
         </div>
       </nav>

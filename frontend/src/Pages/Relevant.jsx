@@ -75,7 +75,7 @@ function Relevant() {
                   style={{ paddingLeft: "42px" }}
                 >
                   <h3 className="fw-bolder">
-                    <a href="as" className="text-decoration-none text-dark">
+                    <a href="/blog" className="text-decoration-none text-dark">
                       VS Code Setup for Frontend Devs
                     </a>
                   </h3>
