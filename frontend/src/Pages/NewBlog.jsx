@@ -30,7 +30,7 @@ const NewBlog = () => {
         </nav>
       </div>
 
-      <div className="container">
+      <div className="container pb-2">
         <div className="row">
           <div className="col-md-10">
             <form>

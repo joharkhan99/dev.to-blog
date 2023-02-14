@@ -2,6 +2,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../Components/Footer.jsx";
 import Nav from "../Components/Nav.jsx";
+import Tags from "../Components/Tags.jsx";
 
 function Top() {
   return (
@@ -9,7 +10,9 @@ function Top() {
       <Nav />
       <div className="container py-4 mt-5">
         <div className="row pt-4">
-          <div className="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-xs-12 d-none d-sm-block"></div>
+          <div className="col-xl-3 col-lg-3 col-md-3 col-sm-4 col-xs-12 d-none d-sm-block">
+            <Tags />
+          </div>
           <div className="col-xl-6 col-lg-6 col-md-7 col-sm-8 col-xs-12">
             <div className="d-flex gap-4">
               <Link

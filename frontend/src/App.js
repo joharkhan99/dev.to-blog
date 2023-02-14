@@ -6,6 +6,9 @@ import Blog from "./Pages/Blog";
 import SignUp from "./Pages/SignUp";
 import Login from "./Pages/Login";
 import NewBlog from "./Pages/NewBlog";
+import UserInfo from "./Pages/UserInfo";
+import Dashboard from "./Pages/Dashboard";
+import Profile from "./Pages/Profile";
 
 function App() {
   return (
@@ -19,6 +22,9 @@ function App() {
           <Route path="/signup" element={<SignUp />} />
           <Route path="/login" element={<Login />} />
           <Route path="/new" element={<NewBlog />} />
+          <Route path="/userinfo" element={<UserInfo />} />
+          <Route path="/dashboard" element={<Dashboard />} />
+          <Route path="/profile" element={<Profile />} />
         </Routes>
       </BrowserRouter>
     </div>

@@ -76,16 +76,33 @@ const Nav = () => {
                   alt=""
                 />
               </button>
-              <ul class="dropdown-menu dropdown-menu-end my-1">
-                <li>
-                  <a class="dropdown-item" href="as">
-                    Action
-                  </a>
+              <ul
+                class="dropdown-menu dropdown-menu-end my-1 pb-3 px-2 shadow-sm"
+                style={{ width: "250px" }}
+              >
+                <li className="border-bottom my-2 pb-2">
+                  <Link class="dropdown-item rounded text-dark" to="/profile">
+                    <b className="d-block">Johar Khan</b>
+                    <span style={{ fontSize: "13px" }}>@joharkhan99</span>
+                  </Link>
                 </li>
                 <li>
-                  <a class="dropdown-item" href="as">
-                    Action
-                  </a>
+                  <Link
+                    class="dropdown-item rounded text-dark py-2"
+                    to="/dashboard"
+                  >
+                    <span>Dashboard</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link class="dropdown-item rounded text-dark py-2" to="/new">
+                    <span>Create Post</span>
+                  </Link>
+                </li>
+                <li>
+                  <Link class="dropdown-item rounded text-dark py-2" to="/">
+                    <span>Sign Out</span>
+                  </Link>
                 </li>
               </ul>
             </div>

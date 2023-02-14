@@ -198,6 +198,14 @@ function Blog() {
                         rows={5}
                         placeholder="Add to Discussion"
                       ></textarea>
+                      <div className="btns mt-2">
+                        <button
+                          className="btn btn-primary fw-bold"
+                          type="submit"
+                        >
+                          Submit
+                        </button>
+                      </div>
                     </div>
                   </div>
                   <div className="comments mt-5">
