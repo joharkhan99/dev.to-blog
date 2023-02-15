@@ -2,6 +2,10 @@ import React from "react";
 import { Link } from "react-router-dom";
 
 const Nav = () => {
+  const logout = () => {
+    window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, "_self");
+  };
+
   return (
     <div className="container-fluid border-bottom bg-white fixed-top">
       <nav class="navbar">
@@ -100,9 +104,12 @@ const Nav = () => {
                   </Link>
                 </li>
                 <li>
-                  <Link class="dropdown-item rounded text-dark py-2" to="/">
+                  <button
+                    class="dropdown-item rounded text-dark py-2"
+                    onClick={logout}
+                  >
                     <span>Sign Out</span>
-                  </Link>
+                  </button>
                 </li>
               </ul>
             </div>

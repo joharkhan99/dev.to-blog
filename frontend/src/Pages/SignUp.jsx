@@ -5,10 +5,13 @@ import Nav from "../Components/Nav";
 import Relevant from "./Relevant";
 
 const SignUp = () => {
-  let navigate = useNavigate();
-  const routeChange = () => {
-    navigate("/userinfo");
+  const googleAuth = () => {
+    window.open(
+      `${process.env.REACT_APP_API_URL}/auth/google/callback`,
+      "_self"
+    );
   };
+
   return (
     <>
       <Nav />
@@ -24,7 +27,7 @@ const SignUp = () => {
                 <div className="d-flex gap-2 flex-column mt-4 mb-3">
                   <button
                     class="btn btn-lg fs-6 fw-bold btn-google bg-light btn-block btn-outline d-flex border justify-content-center py-2"
-                    onClick={routeChange}
+                    onClick={googleAuth}
                   >
                     <img
                       src="https://img.icons8.com/color/256/google-logo.png"

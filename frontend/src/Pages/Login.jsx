@@ -2,9 +2,14 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Footer from "../Components/Footer";
 import Nav from "../Components/Nav";
-import Relevant from "./Relevant";
 
 const Login = () => {
+  const googleAuth = () => {
+    window.open(
+      `${process.env.REACT_APP_API_URL}/auth/google/callback`,
+      "_self"
+    );
+  };
   return (
     <>
       <Nav />
@@ -18,7 +23,10 @@ const Login = () => {
                   DEV Community is a community of 1,006,612 amazing developers
                 </p>
                 <div className="d-flex gap-2 flex-column mt-4 mb-3">
-                  <button class="btn btn-lg fs-6 fw-bold btn-google bg-light btn-block btn-outline d-flex border justify-content-center py-2">
+                  <button
+                    class="btn btn-lg fs-6 fw-bold btn-google bg-light btn-block btn-outline d-flex border justify-content-center py-2"
+                    onClick={googleAuth}
+                  >
                     <img
                       src="https://img.icons8.com/color/256/google-logo.png"
                       alt=""

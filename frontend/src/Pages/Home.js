@@ -3,7 +3,9 @@ import Footer from "../Components/Footer";
 import Nav from "../Components/Nav";
 import Relevant from "./Relevant";
 
-const Home = () => {
+const Home = (userDetails) => {
+  const user = userDetails.user;
+  console.log(user);
   return (
     <>
       <Nav />
