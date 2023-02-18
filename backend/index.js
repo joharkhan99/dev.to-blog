@@ -9,6 +9,7 @@ import passport from "passport";
 import cookieSession from "cookie-session";
 dotenv.config();
 import GoogleStrategy from "passport-google-oauth20";
+import bodyParser from "body-parser";
 
 // ----------------------------
 // ----------------------------
@@ -24,7 +25,6 @@ passport.use(
     },
     function (accessToken, refreshToken, profile, callback) {
       callback(null, profile);
-      console.log(accessToken);
     }
   )
 );
@@ -39,6 +39,11 @@ passport.deserializeUser((user, done) => {
 // ----------------------------
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+app.use("/users", express.static("./users"));
+app.use("/posts", express.static("./posts"));
+
 app.use(
   cookieSession({
     name: "session",
@@ -51,17 +56,15 @@ app.use(passport.initialize());
 app.use(passport.session());
 app.use(
   cors({
-    origin: "http://localhost:3000",
-    methods: "GET,POST,PUT,DELETE",
+    origin: process.env.CLIENT_URL,
+    methods: "GET,POST,PUT,DELETE,PATCH",
     credentials: true,
   })
 );
-// app.use(express.json());
 
 app.use("/auth", authRoutes);
-
-app.use("/api/users", userRoutes);
-app.use("/api/posts", postRoutes);
+app.use("/users", userRoutes);
+app.use("/posts", postRoutes);
 
 const port = process.env.PORT || 8080;
 

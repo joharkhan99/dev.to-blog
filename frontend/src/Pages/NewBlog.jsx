@@ -1,10 +1,44 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import ReactQuill from "react-quill";
 import "react-quill/dist/quill.snow.css";
+import axios from "axios";
+import { WithContext as ReactTags } from "react-tag-input";
+import { toast, ToastContainer } from "react-toastify";
 
 const NewBlog = () => {
-  const [value, setValue] = useState("");
+  const [tags, setTags] = useState([]);
+  const [suggestions, setSuggestions] = useState([]);
+
+  const getTags = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/posts/tags`;
+      const response = await axios.get(url, { withCredentials: true });
+      let result = await response.data.map((item) => item.name);
+      let suggestions = result.map((country) => {
+        return {
+          id: country,
+          text: country,
+        };
+      });
+      setSuggestions(suggestions);
+    } catch (error) {
+      console.log(error.response.data);
+    }
+  };
+  useEffect(() => {
+    getTags();
+  }, []);
+
+  const handleDelete = (i) => {
+    setTags(tags.filter((tag, index) => index !== i));
+  };
+
+  const handleAddition = (tag) => {
+    setTags([...tags, tag]);
+  };
+
+  // REACT QUILL
   const quillmodules = {
     toolbar: [
       [{ header: "1" }, { header: "2" }, { font: [] }],
@@ -16,7 +50,7 @@ const NewBlog = () => {
         { indent: "-1" },
         { indent: "+1" },
       ],
-      ["link", "image", "video"],
+      ["link", "image"],
       ["clean"],
     ],
     clipboard: {
@@ -41,8 +75,120 @@ const NewBlog = () => {
     "video",
   ];
 
+  // FORM HANDLING
+  const [userUploadedImage, setuserUploadedImage] = useState(false);
+  const [imagePreviewClass, setimagePreviewClass] = useState("d-none");
+  const [imagePreviewSrc, setimagePreviewSrc] = useState(null);
+  const [coverImage, setCoverImage] = useState("");
+  const [title, settitle] = useState("");
+  const [value, setValue] = useState("");
+
+  const handlePhoto = (e) => {
+    setCoverImage(e.target.files[0]);
+    console.log(e.target.files[0]);
+    if (e.target.files[0]) {
+      setuserUploadedImage(true);
+      setimagePreviewClass("");
+
+      const reader = new FileReader();
+      reader.onload = () => {
+        setimagePreviewSrc(reader.result);
+      };
+      reader.readAsDataURL(e.target.files[0]);
+    } else {
+      setuserUploadedImage(false);
+      setimagePreviewClass("d-none");
+    }
+  };
+
+  const uploadcoverimage = async () => {
+    try {
+      const formData = new FormData();
+      formData.append("coverimage", coverImage);
+      const res = await axios.post(
+        `${process.env.REACT_APP_API_URL}/posts/upload`,
+        formData
+      );
+      return res.data;
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+
+    if (tags.length < 1) {
+      toast.success("Please add atleast 1 tag", {
+        type: "warning",
+      });
+      return;
+    }
+
+    const url = `${process.env.REACT_APP_API_URL}/posts/create`;
+    if (userUploadedImage) {
+      var postimage = await uploadcoverimage();
+      await axios
+        .post(
+          url,
+          {
+            title: title,
+            tags: tags,
+            body: value,
+            image: `${process.env.REACT_APP_API_URL}/posts/${postimage}`,
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.data.error) {
+            toast.success(res.data.message, { type: "error" });
+          } else {
+            toast.success("Post Published Successfully", {
+              type: "success",
+              autoClose: 500,
+            });
+            setTimeout(() => {
+              window.location.href = `/${res.data.username}/${res.data.post.titleURL}`;
+            }, 800);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } else {
+      await axios
+        .post(
+          url,
+          {
+            title: title,
+            tags: tags,
+            body: value,
+            image: "",
+          },
+          { withCredentials: true }
+        )
+        .then((res) => {
+          if (res.data.error) {
+            toast.success(res.data.message, { type: "error" });
+          } else {
+            toast.success("Post Published Successfully", {
+              type: "success",
+              autoClose: 500,
+            });
+            setTimeout(() => {
+              window.location.href = `/${res.data.username}/${res.data.post.titleURL}`;
+            }, 800);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    }
+  };
+
   return (
     <>
+      <ToastContainer />
       <div className="container-fluid bg-transparent">
         <nav class="navbar">
           <div class="container p-0">
@@ -110,7 +256,7 @@ const NewBlog = () => {
                 role="tabpanel"
                 aria-labelledby="editor-tab"
               >
-                <form>
+                <form encType="multipart/form-data" onSubmit={handleSubmit}>
                   <div className="card px-md-4">
                     <div className="card-body">
                       <div>
@@ -119,7 +265,9 @@ const NewBlog = () => {
                         </label>
                         <input
                           class="form-control form-control-md w-auto shadow-none"
-                          id="formFileLg"
+                          id="coverImage"
+                          name="coverImage"
+                          onChange={handlePhoto}
                           type="file"
                         />
                       </div>
@@ -128,15 +276,28 @@ const NewBlog = () => {
                           name="text"
                           placeholder="New post title here..."
                           class="fw-bolder shadow-none fs-1 text-dark form-control border-0"
+                          value={title}
+                          onInput={(e) => {
+                            settitle(e.target.value);
+                          }}
+                          required
                         ></textarea>
                       </div>
-                      <div className="my-3">
-                        <input
-                          type="text"
-                          name="tags"
-                          className="form-control border-0 shadow-none"
-                          placeholder="Add up to 4 tags..."
-                        />
+                      <div className="my-3 mb-5">
+                        {suggestions !== undefined &&
+                          suggestions.length > 0 && (
+                            <ReactTags
+                              tags={tags}
+                              handleDelete={handleDelete}
+                              handleAddition={handleAddition}
+                              suggestions={suggestions}
+                              inputFieldPosition="bottom"
+                              autocomplete
+                              editable
+                              className="form-control border-0 shadow-none"
+                              placeholder="Add upto 4 tags"
+                            />
+                          )}
                       </div>
                       <div className="my-3">
                         <ReactQuill
@@ -145,7 +306,6 @@ const NewBlog = () => {
                           onChange={setValue}
                           modules={quillmodules}
                           formats={formats}
-                          // bounds={".app"}
                           placeholder="Write your post content here..."
                         />
                       </div>
@@ -165,9 +325,12 @@ const NewBlog = () => {
                 aria-labelledby="preview-tab"
               >
                 <div class="card w-100 overflow-hidden px-md-0">
-                  <div className="card-header p-0" style={{ height: "275px" }}>
+                  <div
+                    className={"card-header p-0 " + imagePreviewClass}
+                    style={{ height: "275px" }}
+                  >
                     <img
-                      src={require("../assets/blog.webp")}
+                      src={imagePreviewSrc}
                       class="card-img-top w-100 h-100"
                       style={{ objectFit: "cover" }}
                       alt="..."
@@ -175,31 +338,22 @@ const NewBlog = () => {
                   </div>
                   <div class="card-body bg-white p-lg-5">
                     <div className="post-details mb-5">
-                      <h1 className="fw-bolder fs-1 py-3 text-dark">
-                        VS Code Setup for Frontend Devs
-                      </h1>
+                      <h1 className="fw-bolder fs-1 py-3 text-dark">{title}</h1>
                       <div
                         className="post-tags d-flex gap-3 mb-4"
                         style={{ fontSize: "15px" }}
                       >
-                        <a
-                          href="as"
-                          className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                        >
-                          #vscode
-                        </a>
-                        <a
-                          href="as"
-                          className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                        >
-                          #javascript
-                        </a>
-                        <a
-                          href="as"
-                          className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                        >
-                          #tutorial
-                        </a>
+                        {tags.map((item) => {
+                          return (
+                            <a
+                              href="as"
+                              key={item.id}
+                              className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
+                            >
+                              {item.text}
+                            </a>
+                          );
+                        })}
                       </div>
                     </div>
                     <div className="post-description">

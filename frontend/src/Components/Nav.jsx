@@ -1,11 +1,12 @@
-import React from "react";
+import React, { useContext } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 
 const Nav = () => {
   const logout = () => {
     window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, "_self");
   };
-
+  const user = useContext(UserContext);
   return (
     <div className="container-fluid border-bottom bg-white fixed-top">
       <nav class="navbar">
@@ -18,7 +19,7 @@ const Nav = () => {
                 height="40"
               />
             </Link>
-            <form role="search" className="d-none d-sm-block">
+            {/* <form role="search" className="d-none d-sm-block">
               <div class="input-group border border-secondary rounded p-0 m-0">
                 <input
                   type="text"
@@ -44,86 +45,109 @@ const Nav = () => {
                   </svg>
                 </button>
               </div>
-            </form>
+            </form> */}
           </div>
 
           <div className="d-flex justify-content-end align-items-center gap-2">
-            <Link to="/new" class="btn btn-outline-primary fw-bold">
-              Create Post
-            </Link>
-            <a
-              href="as"
-              className="btn btn-outline-primary border-white position-relative"
-            >
-              <i class="fa-regular fa-bell text-dark fs-4"></i>
-              <span
-                class="badge text-white bg-danger position-absolute top-0 start-50 px-1"
-                style={{
-                  paddingTop: "2px",
-                  paddingBottom: "2px",
-                }}
-              >
-                9
-              </span>
-            </a>
-            <div class="dropdown">
-              <button
-                class="border-0 bg-transparent p-0"
-                type="button"
-                data-bs-toggle="dropdown"
-                aria-expanded="false"
-                style={{ width: "35px", height: "35px" }}
-              >
-                <img
-                  src={require("../assets/user.jpeg")}
-                  className="rounded-circle bg-light cover w-100 h-100 shadow-sm"
-                  alt=""
-                />
-              </button>
-              <ul
-                class="dropdown-menu dropdown-menu-end my-1 pb-3 px-2 shadow-sm"
-                style={{ width: "250px" }}
-              >
-                <li className="border-bottom my-2 pb-2">
-                  <Link class="dropdown-item rounded text-dark" to="/profile">
-                    <b className="d-block">Johar Khan</b>
-                    <span style={{ fontSize: "13px" }}>@joharkhan99</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link
-                    class="dropdown-item rounded text-dark py-2"
-                    to="/dashboard"
+            {user === null || user === undefined ? (
+              <>
+                <Link
+                  to="/login"
+                  className="btn btn-outline-primary border-white text-dark"
+                >
+                  Login
+                </Link>
+
+                <Link to="/signup" class="btn btn-outline-primary fw-bold">
+                  Create account
+                </Link>
+              </>
+            ) : (
+              <>
+                <Link to="/new" class="btn btn-outline-primary fw-bold">
+                  Create Post
+                </Link>
+                <a
+                  href="as"
+                  className="btn btn-outline-primary border-white position-relative"
+                >
+                  <i class="fa-regular fa-bell text-dark fs-4"></i>
+                  <span
+                    class="badge text-white bg-danger position-absolute top-0 start-50 px-1"
+                    style={{
+                      paddingTop: "2px",
+                      paddingBottom: "2px",
+                    }}
                   >
-                    <span>Dashboard</span>
-                  </Link>
-                </li>
-                <li>
-                  <Link class="dropdown-item rounded text-dark py-2" to="/new">
-                    <span>Create Post</span>
-                  </Link>
-                </li>
-                <li>
+                    9
+                  </span>
+                </a>
+                <div class="dropdown">
                   <button
-                    class="dropdown-item rounded text-dark py-2"
-                    onClick={logout}
+                    class="border-0 bg-transparent p-0"
+                    type="button"
+                    data-bs-toggle="dropdown"
+                    aria-expanded="false"
+                    style={{ width: "35px", height: "35px" }}
                   >
-                    <span>Sign Out</span>
+                    <img
+                      src={user.avatar}
+                      style={{ objectFit: "cover" }}
+                      className="rounded-circle bg-light cover w-100 h-100 shadow-sm"
+                      alt=""
+                    />
                   </button>
-                </li>
-              </ul>
-            </div>
-
-            <Link
-              to="/login"
-              className="btn btn-outline-primary border-white text-dark"
-            >
-              Login
-            </Link>
-
-            <Link to="/signup" class="btn btn-outline-primary fw-bold">
-              Create account
-            </Link>
+                  <ul
+                    class="dropdown-menu dropdown-menu-end my-1 pb-3 px-2 shadow-sm"
+                    style={{ width: "250px" }}
+                  >
+                    <li className="border-bottom my-2 pb-2">
+                      <Link
+                        class="dropdown-item rounded text-dark"
+                        to="/profile"
+                      >
+                        <b className="d-block">{user.name}</b>
+                        <span style={{ fontSize: "13px" }}>
+                          @{user.username}
+                        </span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        class="dropdown-item rounded text-dark py-2"
+                        to="/dashboard"
+                      >
+                        <span>Dashboard</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        class="dropdown-item rounded text-dark py-2"
+                        to="/new"
+                      >
+                        <span>Create Post</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <Link
+                        class="dropdown-item rounded text-dark py-2"
+                        to="/userinfo"
+                      >
+                        <span>Profile Settings</span>
+                      </Link>
+                    </li>
+                    <li>
+                      <button
+                        class="dropdown-item rounded text-dark py-2"
+                        onClick={logout}
+                      >
+                        <span>Sign Out</span>
+                      </button>
+                    </li>
+                  </ul>
+                </div>
+              </>
+            )}
           </div>
         </div>
       </nav>

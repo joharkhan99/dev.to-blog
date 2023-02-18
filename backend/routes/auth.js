@@ -2,21 +2,12 @@ import express from "express";
 import passport from "passport";
 import { login, logout, register } from "../controllers/auth.js";
 import dotenv from "dotenv";
+
 dotenv.config();
 
 const router = express.Router();
 
-router.get("/login/success", (req, res) => {
-  if (req.user) {
-    res.status(200).json({
-      error: false,
-      message: "Successfully Loged In",
-      user: req.user,
-    });
-  } else {
-    res.status(403).json({ error: true, message: "Not Authorized" });
-  }
-});
+router.get("/login/success", register);
 
 router.get("/login/failed", (req, res) => {
   res.status(401).json({
@@ -35,7 +26,10 @@ router.get(
   passport.authenticate("google", {
     successRedirect: process.env.CLIENT_URL,
     failureRedirect: "/login/failed",
-  })
+  }),
+  function (req, res) {
+    res.status(201).json("YES IT WORKED");
+  }
 );
 
 router.get("/logout", (req, res) => {

@@ -1,11 +1,11 @@
-import React from "react";
+import React, { useContext } from "react";
+import { UserContext } from "../App";
 import Footer from "../Components/Footer";
 import Nav from "../Components/Nav";
 import Relevant from "./Relevant";
 
-const Home = (userDetails) => {
-  const user = userDetails.user;
-  console.log(user);
+const Home = () => {
+  const user = useContext(UserContext);
   return (
     <>
       <Nav />

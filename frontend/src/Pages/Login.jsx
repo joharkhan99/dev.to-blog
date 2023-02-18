@@ -36,7 +36,8 @@ const Login = () => {
                     <span>Continue with Google</span>
                   </button>
                 </div>
-                <div
+
+                {/* <div
                   className="border-light border-bottom border-2 mb-3"
                   style={{
                     height: "20px",
@@ -48,9 +49,9 @@ const Login = () => {
                   >
                     Have a password? Continue with your email address
                   </div>
-                </div>
+                </div> */}
 
-                <form className="text-start pt-3">
+                {/* <form className="text-start pt-3">
                   <div class="mb-3">
                     <label for="email" class="form-label fw-bold">
                       Email
@@ -77,7 +78,7 @@ const Login = () => {
                   >
                     Continue
                   </button>
-                </form>
+                </form> */}
 
                 <div
                   className="border-light border-bottom border-2 my-3"

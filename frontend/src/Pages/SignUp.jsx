@@ -2,7 +2,6 @@ import React from "react";
 import { Link, useNavigate } from "react-router-dom";
 import Footer from "../Components/Footer";
 import Nav from "../Components/Nav";
-import Relevant from "./Relevant";
 
 const SignUp = () => {
   const googleAuth = () => {

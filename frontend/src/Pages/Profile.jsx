@@ -1,9 +1,40 @@
-import React from "react";
+import axios from "axios";
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import Nav from "../Components/Nav";
-import Relevant from "./Relevant";
 
 const Profile = () => {
+  const params = useParams();
+  const username = params.username;
+  const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [profileUser, setProfileUser] = useState([]);
+  const [likes, setLikes] = useState(0);
+
+  const getUserProfile = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/users/profile/${username}`;
+      const response = await axios.get(url);
+      setPosts(response.data.post);
+      setComments(response.data.comments);
+      setProfileUser(response.data.author);
+      setLikes(response.data.likes);
+      console.log(response.data);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return `${date.toDateString()}`;
+  }
+
   return (
     <>
       <Nav />
@@ -27,32 +58,33 @@ const Profile = () => {
                   }}
                 >
                   <img
-                    src={require("../assets/user.jpeg")}
+                    src={profileUser.avatar}
                     className="rounded-circle bg-light cover w-100 h-100 shadow-sm"
-                    alt=""
-                    style={{ border: "6px solid #0d6efd" }}
+                    alt={profileUser.name}
+                    style={{ border: "6px solid #0d6efd", objectFit: "cover" }}
                   />
                 </div>
               </div>
               <div className="card-body pb-4">
-                <h1 class="fw-bolder fs-2 text-dark">Johar Khan</h1>
-                <p className="bio mb-4">
-                  Full Stack Developer with 3+ years of hands-on experience
-                  designing, developing, and implementing applications and
-                  solutions using various technologies and programming
-                  languages.
-                </p>
+                <h1 class="fw-bolder fs-2 text-dark">{profileUser.name}</h1>
+                <p className="bio mb-4">{profileUser.bio}</p>
                 <div className="user-details text-secondary">
-                  <span className="me-4 d-inline-block">
-                    <i class="fa-solid fa-location-dot pe-2 fs-5"></i>
-                    <span style={{ fontSize: "14px" }}>
-                      Islamabad, Pakistan
+                  {profileUser.location !== "" ||
+                  profileUser.location !== null ? (
+                    <span className="me-4 d-inline-block">
+                      <i class="fa-solid fa-location-dot pe-2 fs-5"></i>
+                      <span style={{ fontSize: "14px" }}>
+                        {profileUser.location}
+                      </span>
                     </span>
-                  </span>
+                  ) : (
+                    ""
+                  )}
+
                   <span className="me-4 d-inline-block">
                     <i class="fa-solid fa-cake-candles pe-2 fs-5"></i>
                     <span style={{ fontSize: "14px" }}>
-                      Joined on 10 Feb 2023
+                      Joined on {formatDate(profileUser.joinDate)}
                     </span>
                   </span>
                 </div>
@@ -63,13 +95,13 @@ const Profile = () => {
                     <b className="text-secondary" style={{ fontSize: "14px" }}>
                       Education
                     </b>
-                    <p>Comsats University Islamabad, Pakistan</p>
+                    <p>{profileUser.education}</p>
                   </div>
                   <div className="col-md-6">
                     <b className="text-secondary" style={{ fontSize: "14px" }}>
                       Work
                     </b>
-                    <p>Full Stack Developer</p>
+                    <p>{profileUser.experience}</p>
                   </div>
                 </div>
               </div>
@@ -80,176 +112,149 @@ const Profile = () => {
                   <div className="card-body bg-light pb-0">
                     <div className="d-flex align-items-center gap-3 mb-3">
                       <i class="fa-solid fa-table-list text-secondary fs-5"></i>
-                      <span>1 post published</span>
+                      <span>{posts.length} post(s) published</span>
                     </div>
                     <div className="d-flex align-items-center gap-3 mb-3">
                       <i class="fa-regular fa-comment text-secondary fs-5"></i>
-                      <span>0 comments written</span>
+                      <span>{comments.length} comments written</span>
                     </div>
                     <div className="d-flex align-items-center gap-3 mb-3">
                       <i class="fa-regular fa-heart text-secondary fs-5"></i>
-                      <span>25 reactions</span>
+                      <span>{likes} reactions</span>
                     </div>
                   </div>
                 </div>
               </div>
               <div className="col-md-8">
-                <div class="card w-100 overflow-hidden mb-2">
-                  <div class="card-body bg-white">
-                    <div className="d-flex gap-2 align-items-center">
-                      <a
-                        className="post-img text-decoration-none"
-                        href="as"
-                        style={{ width: "2rem", height: "2rem" }}
-                      >
-                        <img
-                          src={require("../assets/user.jpeg")}
-                          className="rounded-circle bg-light cover w-100 h-100 shadow-sm"
-                          alt=""
-                        />
-                      </a>
-                      <div className="post-metadata">
-                        <div>
-                          <a
-                            href="as"
-                            className="text-decoration-none m-0 p-0 text-dark fw-bold"
+                {posts.map((post) => {
+                  return (
+                    <div class="card w-100 overflow-hidden mb-2">
+                      <div class="card-body bg-white">
+                        <div className="d-flex gap-2 align-items-center">
+                          <Link
+                            className="post-img text-decoration-none"
+                            target="_blank"
+                            to={"/" + profileUser.username}
+                            style={{ width: "2rem", height: "2rem" }}
+                          >
+                            <img
+                              src={profileUser.avatar}
+                              className="rounded-circle bg-light cover w-100 h-100 shadow-sm"
+                              alt=""
+                              style={{ objectFit: "cover" }}
+                            />
+                          </Link>
+                          <div className="post-metadata">
+                            <div>
+                              <Link
+                                to={"/" + profileUser.username}
+                                target="_blank"
+                                className="text-decoration-none m-0 p-0 text-dark fw-bold"
+                                style={{ fontSize: "14px" }}
+                              >
+                                {profileUser.name}
+                              </Link>
+                            </div>
+                            <a
+                              href="as"
+                              className="text-decoration-none m-0 p-0 text-dark d-block"
+                              style={{ fontSize: "12px" }}
+                            >
+                              {formatDate(post.createdAt)}
+                            </a>
+                          </div>
+                        </div>
+                        <div
+                          className="post-details my-3"
+                          style={{ paddingLeft: "42px" }}
+                        >
+                          <h3 className="fw-bolder">
+                            <Link
+                              to={
+                                "/" + profileUser.username + "/" + post.titleURL
+                              }
+                              className="text-decoration-none text-dark"
+                              target="_blank"
+                            >
+                              {post.title}
+                            </Link>
+                          </h3>
+
+                          <div
+                            className="post-tags d-flex gap-3 mb-4"
                             style={{ fontSize: "14px" }}
                           >
-                            Ivan SImaoa
-                          </a>
+                            {post.tags.map((item) => {
+                              return (
+                                <a
+                                  href="as"
+                                  key={item}
+                                  className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
+                                >
+                                  {item}
+                                </a>
+                              );
+                            })}
+                          </div>
+                          <div className="post-stats d-flex space-between">
+                            <div
+                              className="d-flex gap-3"
+                              style={{ fontSize: "14px" }}
+                            >
+                              <span className="text-decoration-none text-dark bg-light px-2 py-1 rounded">
+                                <i class="fa-regular fa-heart pe-1"></i>
+                                {post.likes.length} reactions
+                              </span>
+                              <span
+                                href="as"
+                                className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
+                              >
+                                <i class="fa-regular fa-comment pe-1"></i>
+                                {post.comments.length} Comments
+                              </span>
+                            </div>
+                          </div>
                         </div>
-                        <a
-                          href="as"
-                          className="text-decoration-none m-0 p-0 text-dark d-block"
-                          style={{ fontSize: "12px" }}
-                        >
-                          1 Aug, 2023
-                        </a>
                       </div>
                     </div>
-                    <div
-                      className="post-details my-3"
-                      style={{ paddingLeft: "42px" }}
-                    >
-                      <h3 className="fw-bolder">
-                        <a href="as" className="text-decoration-none text-dark">
-                          VS Code Setup for Frontend Devs
-                        </a>
-                      </h3>
+                  );
+                })}
 
-                      <div
-                        className="post-tags d-flex gap-3 mb-4"
-                        style={{ fontSize: "14px" }}
-                      >
-                        <a
-                          href="as"
-                          className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                        >
-                          #vscode
-                        </a>
-                        <a
-                          href="as"
-                          className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                        >
-                          #javascript
-                        </a>
-                        <a
-                          href="as"
-                          className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                        >
-                          #tutorial
-                        </a>
-                      </div>
-                      <div className="post-stats d-flex space-between">
-                        <div
-                          className="d-flex gap-3"
-                          style={{ fontSize: "14px" }}
-                        >
-                          <a
-                            href="as"
-                            className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                          >
-                            <i class="fa-regular fa-heart pe-1"></i>2 reactions
-                          </a>
-                          <a
-                            href="as"
-                            className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                          >
-                            <i class="fa-regular fa-comment pe-1"></i>Add
-                            Comment
-                          </a>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div className="user_comments">
+                <div className="user_comments mt-4">
                   <ul class="list-group">
                     <li class="list-group-item py-3 fs-5 fw-bold">
                       Recent Comments
                     </li>
-                    <li class="list-group-item dropdown-item">
-                      <a
-                        href="sa"
-                        className="d-block w-100 text-decoration-none text-dark"
-                        style={{ whiteSpace: "break-spaces" }}
-                      >
-                        <span className="fs-6 fw-bold">
-                          Save HTML Form Data to a MySQL Database using PHP
-                        </span>
-                        <div
-                          className="d-flex align-items-center gap-2"
-                          style={{ fontSize: "14px" }}
-                        >
-                          <p className="m-0 p-0">Great article.</p>
-                          <span className="date d-block text-secondary">
-                            Feb 12
-                          </span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="list-group-item dropdown-item">
-                      <a
-                        href="sa"
-                        className="d-block w-100 text-decoration-none text-dark"
-                        style={{ whiteSpace: "break-spaces" }}
-                      >
-                        <span className="fs-6 fw-bold">
-                          Save HTML Form Data to a MySQL Database using PHP
-                        </span>
-                        <div
-                          className="d-flex align-items-center gap-2"
-                          style={{ fontSize: "14px" }}
-                        >
-                          <p className="m-0 p-0">
-                            Your article really helped me.
-                          </p>
-                          <span className="date d-block text-secondary">
-                            Feb 12
-                          </span>
-                        </div>
-                      </a>
-                    </li>
-                    <li class="list-group-item dropdown-item">
-                      <a
-                        href="sa"
-                        className="d-block w-100 text-decoration-none text-dark"
-                        style={{ whiteSpace: "break-spaces" }}
-                      >
-                        <span className="fs-6 fw-bold">
-                          Save HTML Form Data to a MySQL Database using PHP
-                        </span>
-                        <div
-                          className="d-flex align-items-center gap-2"
-                          style={{ fontSize: "14px" }}
-                        >
-                          <p className="m-0 p-0">Great article.</p>
-                          <span className="date d-block text-secondary">
-                            Feb 12
-                          </span>
-                        </div>
-                      </a>
-                    </li>
+                    {comments.map((comment) => {
+                      return (
+                        <li class="list-group-item dropdown-item">
+                          <Link
+                            to={
+                              "/" +
+                              profileUser.username +
+                              "/" +
+                              comment.post.titleURL
+                            }
+                            className="d-block w-100 text-decoration-none text-dark"
+                            style={{ whiteSpace: "break-spaces" }}
+                            target="_blank"
+                          >
+                            <span className="fs-6 fw-bold">
+                              {comment.post.title}
+                            </span>
+                            <div
+                              className="d-flex align-items-center gap-2"
+                              style={{ fontSize: "14px" }}
+                            >
+                              <p className="m-0 p-0">{comment.body}</p>
+                              <span className="date d-block text-secondary">
+                                {formatDate(comment.createdAt)}
+                              </span>
+                            </div>
+                          </Link>
+                        </li>
+                      );
+                    })}
                   </ul>
                 </div>
               </div>
