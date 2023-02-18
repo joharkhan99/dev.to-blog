@@ -104,7 +104,7 @@ const Nav = () => {
                     <li className="border-bottom my-2 pb-2">
                       <Link
                         class="dropdown-item rounded text-dark"
-                        to="/profile"
+                        to={"/" + user.username}
                       >
                         <b className="d-block">{user.name}</b>
                         <span style={{ fontSize: "13px" }}>

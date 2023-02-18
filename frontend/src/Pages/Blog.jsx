@@ -45,7 +45,7 @@ function Blog() {
           url,
           {
             body: commentText,
-            post: post[0]._id,
+            post: post._id,
             author: user._id,
           },
           { withCredentials: true }
@@ -79,7 +79,7 @@ function Blog() {
       .post(
         url,
         {
-          post: post[0]._id,
+          post: post._id,
           author: user._id,
         },
         { withCredentials: true }
@@ -165,7 +165,7 @@ function Blog() {
                   >
                     <i class="fa-regular fa-heart d-block fs-4"></i>
                     <span style={{ fontSize: "15px" }}>
-                      {post[0].likes.length}
+                      {post.likes.length}
                     </span>
                   </button>
                 </div>
@@ -173,7 +173,7 @@ function Blog() {
                   <button type="button" className="bg-transparent border-0">
                     <i class="fa-regular fa-comment d-block fs-4"></i>
                     <span style={{ fontSize: "15px" }}>
-                      {post[0].comments.length}
+                      {post.comments.length}
                     </span>
                   </button>
                 </div>
@@ -181,7 +181,7 @@ function Blog() {
                   <button type="button" className="bg-transparent border-0">
                     <i class="fa-regular fa-bookmark d-block fs-4"></i>
                     <span style={{ fontSize: "15px" }}>
-                      {post[0].bookmarks.length}
+                      {post.bookmarks.length}
                     </span>
                   </button>
                 </div>
@@ -214,13 +214,13 @@ function Blog() {
 
             <div className="col-xl-8 col-lg-8 col-md-8 col-sm-10 col-xs-12 mb-4">
               <div class="card w-100 overflow-hidden mb-2">
-                {post[0].image !== "" ? (
+                {post.image !== "" ? (
                   <div className="card-header p-0" style={{ height: "275px" }}>
                     <img
-                      src={post[0].image}
+                      src={post.image}
                       class="card-img-top w-100 h-100"
                       style={{ objectFit: "cover" }}
-                      alt={post[0].title}
+                      alt={post.title}
                     />
                   </div>
                 ) : (
@@ -228,9 +228,9 @@ function Blog() {
                 )}
                 <div class="card-body bg-white p-lg-5 pt-4">
                   <div className="d-flex gap-2 align-items-center">
-                    <a
+                    <Link
                       className="post-img text-decoration-none"
-                      href="as"
+                      to={"/" + author.username}
                       style={{ width: "2.5rem", height: "2.5rem" }}
                     >
                       <img
@@ -239,54 +239,54 @@ function Blog() {
                         alt=""
                         style={{ objectFit: "cover" }}
                       />
-                    </a>
+                    </Link>
                     <div className="post-metadata">
                       <div>
-                        <a
-                          href="as"
+                        <Link
+                          to={"/" + author.username}
                           className="text-decoration-none m-0 p-0 text-dark fw-bold"
                           style={{ fontSize: "16px" }}
                         >
                           {author.name}
-                        </a>
+                        </Link>
                       </div>
                       <div
                         className="text-decoration-none m-0 p-0 text-dark d-block"
                         style={{ fontSize: "11px" }}
                       >
-                        Posted on {formatDate(post[0].createdAt)}
+                        Posted on {formatDate(post.createdAt)}
                       </div>
                     </div>
                   </div>
                   <div className="post-details my-3 mb-5">
                     <h1 className="fw-bolder fs-1 py-3 text-dark">
-                      {post[0].title}
+                      {post.title}
                     </h1>
                     <div
                       className="post-tags d-flex gap-3 mb-4"
                       style={{ fontSize: "15px" }}
                     >
-                      {post[0].tags.map((item) => {
+                      {post.tags.map((item) => {
                         return (
-                          <a
-                            href="as"
+                          <Link
+                            to={"/tag/" + item}
                             key={item}
                             className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                           >
                             {item}
-                          </a>
+                          </Link>
                         );
                       })}
                     </div>
                   </div>
                   <div className="post-description border-bottom pb-2 mb-4">
-                    <div dangerouslySetInnerHTML={{ __html: post[0].body }} />
+                    <div dangerouslySetInnerHTML={{ __html: post.body }} />
                   </div>
 
                   {/* comments */}
                   <div className="post-comments">
                     <h3 className="fw-bolder">
-                      Comments ({post[0].comments.length})
+                      Comments ({post.comments.length})
                     </h3>
 
                     {user !== null && user !== undefined ? (

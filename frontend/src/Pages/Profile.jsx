@@ -186,13 +186,13 @@ const Profile = () => {
                           >
                             {post.tags.map((item) => {
                               return (
-                                <a
-                                  href="as"
+                                <Link
+                                  to={"/tag/" + item}
                                   key={item}
                                   className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                                 >
                                   {item}
-                                </a>
+                                </Link>
                               );
                             })}
                           </div>

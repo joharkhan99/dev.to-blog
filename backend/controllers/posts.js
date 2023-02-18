@@ -88,11 +88,12 @@ export const getPost = async (req, res) => {
   try {
     const author = await User.findOne({ username: username });
     if (author) {
-      const post = await Post.find({ author: author._id, titleURL: title });
-
-      const comments = await Comment.find()
+      const post = await Post.findOne({ author: author._id, titleURL: title });
+      // console.log(post);
+      const comments = await Comment.find({ post: post._id })
         .populate("author", "name username avatar")
         .sort({ date: -1 });
+      console.log(comments);
       res.json({ post, author, comments });
     } else {
       res.status(500).json({ message: "Something went wrong" });

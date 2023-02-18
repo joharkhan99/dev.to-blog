@@ -345,13 +345,14 @@ const NewBlog = () => {
                       >
                         {tags.map((item) => {
                           return (
-                            <a
-                              href="as"
+                            <Link
+                              to={"/tag/" + item.text}
                               key={item.id}
+                              target="_blank"
                               className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                             >
                               {item.text}
-                            </a>
+                            </Link>
                           );
                         })}
                       </div>
