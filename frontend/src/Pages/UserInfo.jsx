@@ -43,7 +43,7 @@ const UserInfo = () => {
       const formData = new FormData();
       formData.append("avatar", avatar);
       const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/users/upload`,
+        `${process.env.REACT_APP_API_URL}/api/users/upload`,
         formData
       );
       return res.data;
@@ -54,7 +54,7 @@ const UserInfo = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const url = `${process.env.REACT_APP_API_URL}/users/update`;
+    const url = `${process.env.REACT_APP_API_URL}/api/users/update`;
     if (userUploadedImage) {
       const imgUrl = await upload();
       await axios

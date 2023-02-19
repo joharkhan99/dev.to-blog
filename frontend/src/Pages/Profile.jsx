@@ -14,7 +14,7 @@ const Profile = () => {
 
   const getUserProfile = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/users/profile/${username}`;
+      const url = `${process.env.REACT_APP_API_URL}/api/users/profile/${username}`;
       const response = await axios.get(url);
       setPosts(response.data.post);
       setComments(response.data.comments);

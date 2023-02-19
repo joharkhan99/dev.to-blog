@@ -20,7 +20,7 @@ const EditBlog = () => {
 
   const getTags = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/posts/tags`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/tags`;
       const response = await axios.get(url, { withCredentials: true });
       let result = await response.data.map((item) => item.name);
       let suggestions = result.map((country) => {
@@ -37,7 +37,7 @@ const EditBlog = () => {
 
   const getCurrentPost = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/posts/getpost`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/getpost`;
       const response = await axios.post(
         url,
         { postid: postId },
@@ -129,7 +129,7 @@ const EditBlog = () => {
       const formData = new FormData();
       formData.append("coverimage", coverImage);
       const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/posts/upload`,
+        `${process.env.REACT_APP_API_URL}/api/posts/upload`,
         formData
       );
       return res.data;
@@ -148,7 +148,7 @@ const EditBlog = () => {
       return;
     }
 
-    const url = `${process.env.REACT_APP_API_URL}/posts/edit`;
+    const url = `${process.env.REACT_APP_API_URL}/api/posts/edit`;
     if (userUploadedImage) {
       var postimage = await uploadcoverimage();
       await axios

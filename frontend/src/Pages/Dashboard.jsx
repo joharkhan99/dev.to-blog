@@ -14,7 +14,7 @@ const Dashboard = () => {
 
   const getUserProfile = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/users/dashboard`;
+      const url = `${process.env.REACT_APP_API_URL}/api/users/dashboard`;
       const response = await axios.post(
         url,
         { username: user.username },
@@ -40,7 +40,7 @@ const Dashboard = () => {
   function DeletePost(e) {
     const postid = e.target.value;
     try {
-      const url = `${process.env.REACT_APP_API_URL}/posts/delete`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/delete`;
       axios.post(url, { post: postid }, { withCredentials: true });
       window.location.href = "/dashboard";
     } catch (error) {

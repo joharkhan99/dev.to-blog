@@ -6,7 +6,7 @@ import Nav from "../Components/Nav";
 const Login = () => {
   const googleAuth = () => {
     window.open(
-      `${process.env.REACT_APP_API_URL}/auth/google/callback`,
+      `${process.env.REACT_APP_API_URL}/api/auth/google/callback`,
       "_self"
     );
   };

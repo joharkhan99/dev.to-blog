@@ -10,7 +10,7 @@ function Top() {
 
   const getPostDetails = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/posts/top`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/top`;
       const response = await axios.get(url);
       setPosts(response.data);
       console.log(response.data);

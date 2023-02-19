@@ -12,7 +12,7 @@ const NewBlog = () => {
 
   const getTags = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/posts/tags`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/tags`;
       const response = await axios.get(url, { withCredentials: true });
       let result = await response.data.map((item) => item.name);
       let suggestions = result.map((country) => {
@@ -106,7 +106,7 @@ const NewBlog = () => {
       const formData = new FormData();
       formData.append("coverimage", coverImage);
       const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/posts/upload`,
+        `${process.env.REACT_APP_API_URL}/api/posts/upload`,
         formData
       );
       return res.data;
@@ -125,7 +125,7 @@ const NewBlog = () => {
       return;
     }
 
-    const url = `${process.env.REACT_APP_API_URL}/posts/create`;
+    const url = `${process.env.REACT_APP_API_URL}/api/posts/create`;
     if (userUploadedImage) {
       var postimage = await uploadcoverimage();
       await axios

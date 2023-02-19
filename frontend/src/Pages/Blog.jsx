@@ -19,7 +19,7 @@ function Blog() {
 
   const getPostDetails = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/posts/${username}/${title}`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/${username}/${title}`;
       const response = await axios.get(url);
       console.log(response.data);
       setPost(response.data.post);
@@ -39,7 +39,7 @@ function Blog() {
     if (commentText.trim() === "") {
       toast.error("Please add comment body");
     } else {
-      const url = `${process.env.REACT_APP_API_URL}/posts/comment`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/comment`;
       await axios
         .post(
           url,
@@ -74,7 +74,7 @@ function Blog() {
       toast.error("Login or Sign up to like this post");
       return;
     }
-    const url = `${process.env.REACT_APP_API_URL}/posts/like`;
+    const url = `${process.env.REACT_APP_API_URL}/api/posts/like`;
     await axios
       .post(
         url,
@@ -107,7 +107,7 @@ function Blog() {
       toast.error("Login or Sign up to like this comment");
       return;
     }
-    const url = `${process.env.REACT_APP_API_URL}/posts/comment/like`;
+    const url = `${process.env.REACT_APP_API_URL}/api/posts/comment/like`;
     await axios
       .post(
         url,

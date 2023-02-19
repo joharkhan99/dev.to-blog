@@ -4,7 +4,7 @@ import { UserContext } from "../App";
 
 const Nav = () => {
   const logout = () => {
-    window.open(`${process.env.REACT_APP_API_URL}/auth/logout`, "_self");
+    window.open(`${process.env.REACT_APP_API_URL}/api/auth/logout`, "_self");
   };
   const user = useContext(UserContext);
   return (

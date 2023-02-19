@@ -6,7 +6,7 @@ function Tags() {
   const [tags, setTags] = useState([]);
   const getTags = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/posts/tags`;
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/tags`;
       const response = await axios.get(url, { withCredentials: true });
       let result = await response.data.map((item) => item.name);
       setTags(result);
