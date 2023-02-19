@@ -103,11 +103,41 @@ export const getPost = async (req, res) => {
   }
 };
 
+export const getEditPost = async (req, res) => {
+  if (req.user != null) {
+    const postid = req.body.postid;
+    try {
+      const post = await Post.findOne({ _id: postid });
+      res.json({ post });
+    } catch (error) {
+      res.status(500).json({ message: "Server error" });
+    }
+  }
+};
+
 export const getAllPost = async function (req, res) {
   var posts = await Post.find()
     .populate("author", "name username avatar")
     .sort({ date: 1 });
   res.json(posts);
+};
+
+export const DeletePost = async function (req, res) {
+  if (req.user != null) {
+    try {
+      Post.findByIdAndDelete(req.body.post, (err, result) => {
+        if (err) {
+          console.log(err);
+        } else {
+          console.log(result);
+        }
+      });
+    } catch (error) {
+      res.status(500).json({ message: "Server error" });
+    }
+  } else {
+    res.json({ error: true, message: "Not Authorized" });
+  }
 };
 
 export const getAllLatestPost = async function (req, res) {
@@ -209,6 +239,49 @@ export const addPost = async (req, res) => {
         return res.json({ post, username: author.username });
       }
     });
+  } else {
+    res.json({ error: true, message: "Not Authorized" });
+  }
+};
+
+export const editPost = async (req, res) => {
+  if (req.user && req.body.postid) {
+    const postid = req.body.postid;
+
+    let tags = req.body.tags.map((item) => item.text);
+    tags.forEach(async (item) => {
+      let find = await Tag.findOne({ name: item });
+      if (!find) {
+        const newItem = new Tag({ name: item });
+        await newItem.save();
+      }
+    });
+
+    var author = await User.findOne({ email: req.user._json.email });
+
+    var updatepost = await Post.findByIdAndUpdate(
+      postid,
+      {
+        title: req.body.title,
+        image: req.body.image,
+        body: req.body.body,
+        tags: tags,
+      },
+      { new: true }
+    )
+      .then((post) => {
+        if (!post) {
+          return res.json({ error: true, message: "Post not found" });
+        }
+
+        return res.json({ post, username: author.username });
+      })
+      .catch((err) => {
+        return res.json({
+          error: true,
+          message: "Internal server error",
+        });
+      });
   } else {
     res.json({ error: true, message: "Not Authorized" });
   }

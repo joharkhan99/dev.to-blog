@@ -1,6 +1,10 @@
 import express from "express";
 import multer from "multer";
-import { getUserProfile, UpdateUser } from "../controllers/users.js";
+import {
+  getDashboard,
+  getUserProfile,
+  UpdateUser,
+} from "../controllers/users.js";
 
 const router = express.Router();
 
@@ -22,5 +26,6 @@ router.post("/upload", upload.single("avatar"), function (req, res) {
 
 router.post("/update", UpdateUser);
 router.get("/profile/:username", getUserProfile);
+router.post("/dashboard/", getDashboard);
 
 export default router;

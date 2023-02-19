@@ -30,6 +30,37 @@ export const getUserProfile = async (req, res) => {
   }
 };
 
+export const getDashboard = async (req, res) => {
+  if (req.user != null) {
+    const username = req.body.username;
+    try {
+      const author = await User.findOne({ username: username });
+      if (author) {
+        const post = await Post.find({ author: author._id });
+
+        var likes = 0;
+        post.map((p) => {
+          likes += p.likes.length;
+        });
+
+        var comments = 0;
+        post.map((p) => {
+          comments += p.comments.length;
+        });
+
+        res.json({ post, author, comments, likes });
+      } else {
+        res.status(500).json({ message: "This user does not exist!" });
+      }
+    } catch (error) {
+      console.log(error);
+      res.status(500).json({ message: "Server error" });
+    }
+  } else {
+    res.json({ error: true, message: "Not Authorized" });
+  }
+};
+
 export const UpdateUser = async (req, res) => {
   if (req.user != null) {
     let user;

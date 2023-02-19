@@ -1,10 +1,53 @@
-import React from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import { UserContext } from "../App";
 import Footer from "../Components/Footer";
 import Nav from "../Components/Nav";
-import Relevant from "./Relevant";
 
 const Dashboard = () => {
+  const [posts, setPosts] = useState([]);
+  const [comments, setComments] = useState([]);
+  const [likes, setLikes] = useState(0);
+
+  const user = useContext(UserContext);
+
+  const getUserProfile = async () => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/users/dashboard`;
+      const response = await axios.post(
+        url,
+        { username: user.username },
+        { withCredentials: true }
+      );
+      setPosts(response.data.post);
+      setComments(response.data.comments);
+      setLikes(response.data.likes);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getUserProfile();
+  }, []);
+
+  function formatDate(dateString) {
+    const date = new Date(dateString);
+    return `${date.toDateString()}`;
+  }
+
+  function DeletePost(e) {
+    const postid = e.target.value;
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/posts/delete`;
+      axios.post(url, { post: postid }, { withCredentials: true });
+      window.location.href = "/dashboard";
+    } catch (error) {
+      console.log(error);
+    }
+  }
+
   return (
     <>
       <Nav />
@@ -14,19 +57,19 @@ const Dashboard = () => {
         <div className="row mt-5">
           <div className="col-md-4 mb-2">
             <div className=" bg-white border rounded p-4">
-              <div className="fs-2 text-dark fw-bolder">23</div>
+              <div className="fs-2 text-dark fw-bolder">{likes}</div>
               <span className="text-secondary">Total post likes</span>
             </div>
           </div>
           <div className="col-md-4 mb-2">
             <div className=" bg-white border rounded p-4">
-              <div className="fs-2 text-dark fw-bolder">40</div>
+              <div className="fs-2 text-dark fw-bolder">{comments}</div>
               <span className="text-secondary">Total post comments</span>
             </div>
           </div>
           <div className="col-md-4 mb-2">
             <div className=" bg-white border rounded p-4">
-              <div className="fs-2 text-dark fw-bolder">9</div>
+              <div className="fs-2 text-dark fw-bolder">{posts.length}</div>
               <span className="text-secondary">Total posts created</span>
             </div>
           </div>
@@ -34,92 +77,61 @@ const Dashboard = () => {
         <div className="row my-4 p-md-3">
           <div className="col-md-12">
             <h2 className="fs-4 text-dark fw-bolder mb-4">Posts</h2>
-            <div className="card mb-2">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-md-6">
-                    <Link
-                      to="/blog"
-                      className="fs-5 fw-bolder d-block text-decoration-none"
-                    >
-                      What will AI do in future?
-                    </Link>
-                    <span style={{ fontSize: "14px" }}>
-                      <b>Published:</b> 13 Feb
-                    </span>
-                  </div>
-                  <div className="col-md-6" style={{ fontSize: "14px" }}>
-                    <div className="d-flex justify-content-between align-items-center h-100">
-                      <div className="d-flex gap-3 text-secondary">
-                        <span className="bg-transparent border-0">
-                          <i class="fa-regular fa-heart pe-1"></i>
-                          <span>140</span>
-                        </span>
-                        <span className="bg-transparent border-0">
-                          <i class="fa-regular fa-comment pe-1"></i>
-                          <span>30</span>
-                        </span>
-                        <span className="bg-transparent border-0">
-                          <i class="fa-regular fa-bookmark pe-1"></i>
-                          <span>154</span>
+            {posts.map((post) => {
+              return (
+                <div className="card mb-2">
+                  <div className="card-body">
+                    <div className="row">
+                      <div className="col-md-6">
+                        <Link
+                          to={"/" + user.username + "/" + post.titleURL}
+                          className="fs-5 fw-bolder d-block text-decoration-none"
+                          target="_blank"
+                        >
+                          {post.title}
+                        </Link>
+                        <span style={{ fontSize: "14px" }}>
+                          <b>Published:</b> {formatDate(post.createdAt)}
                         </span>
                       </div>
-                      <div className="d-flex gap-3">
-                        <a href="as" className="text-decoration-none text-dark">
-                          Edit
-                        </a>
-                        <a href="as" className="text-decoration-none text-dark">
-                          Delete
-                        </a>
-                      </div>
-                    </div>
-                  </div>
-                </div>
-              </div>
-            </div>
-            <div className="card mb-2">
-              <div className="card-body">
-                <div className="row">
-                  <div className="col-md-6">
-                    <Link
-                      to="/blog"
-                      className="fs-5 fw-bolder d-block text-decoration-none"
-                    >
-                      What will AI do in future?
-                    </Link>
-                    <span style={{ fontSize: "14px" }}>
-                      <b>Published:</b> 13 Feb
-                    </span>
-                  </div>
-                  <div className="col-md-6" style={{ fontSize: "14px" }}>
-                    <div className="d-flex justify-content-between align-items-center h-100">
-                      <div className="d-flex gap-3 text-secondary">
-                        <span className="bg-transparent border-0">
-                          <i class="fa-regular fa-heart pe-1"></i>
-                          <span>140</span>
-                        </span>
-                        <span className="bg-transparent border-0">
-                          <i class="fa-regular fa-comment pe-1"></i>
-                          <span>30</span>
-                        </span>
-                        <span className="bg-transparent border-0">
-                          <i class="fa-regular fa-bookmark pe-1"></i>
-                          <span>154</span>
-                        </span>
-                      </div>
-                      <div className="d-flex gap-3">
-                        <a href="as" className="text-decoration-none text-dark">
-                          Edit
-                        </a>
-                        <a href="as" className="text-decoration-none text-dark">
-                          Delete
-                        </a>
+                      <div className="col-md-6" style={{ fontSize: "14px" }}>
+                        <div className="d-flex justify-content-between align-items-center h-100">
+                          <div className="d-flex gap-3 text-secondary">
+                            <span className="bg-transparent border-0">
+                              <i class="fa-regular fa-heart pe-1"></i>
+                              <span>{post.likes.length}</span>
+                            </span>
+                            <span className="bg-transparent border-0">
+                              <i class="fa-regular fa-comment pe-1"></i>
+                              <span>{post.comments.length}</span>
+                            </span>
+                            <span className="bg-transparent border-0">
+                              <i class="fa-regular fa-bookmark pe-1"></i>
+                              <span>0</span>
+                            </span>
+                          </div>
+                          <div className="d-flex gap-3">
+                            <Link
+                              to={"/edit/" + post._id}
+                              className="text-decoration-none text-dark"
+                            >
+                              Edit
+                            </Link>
+                            <button
+                              value={post._id}
+                              onClick={DeletePost}
+                              className="border-0 bg-transparent p-0 m-0 d-inline text-dark"
+                            >
+                              Delete
+                            </button>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            </div>
+              );
+            })}
           </div>
         </div>
       </div>

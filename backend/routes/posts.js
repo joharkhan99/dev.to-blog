@@ -4,9 +4,12 @@ import {
   addCommentLike,
   addLike,
   addPost,
+  DeletePost,
+  editPost,
   getAllLatestPost,
   getAllPost,
   getAllTopPost,
+  getEditPost,
   getPost,
   getTagPosts,
   getTags,
@@ -35,11 +38,14 @@ router.get("/relevant", getAllPost);
 router.get("/latest", getAllLatestPost);
 router.get("/top", getAllTopPost);
 router.post("/create", addPost);
+router.post("/edit", editPost);
+router.post("/delete", DeletePost);
 router.post("/comment", addComment);
 router.post("/like", addLike);
 router.post("/comment/like", addCommentLike);
 router.get("/tags", getTags);
 router.get("/tag/:tag", getTagPosts);
 router.get("/:username/:title", getPost);
+router.post("/getpost", getEditPost);
 
 export default router;

@@ -397,7 +397,10 @@ function Blog() {
                       className="d-flex gap-2 align-items-center"
                       style={{ marginTop: "-31px" }}
                     >
-                      <a className="post-img text-decoration-none" href="as">
+                      <Link
+                        className="post-img text-decoration-none"
+                        to={"/" + author.username}
+                      >
                         <img
                           src={author.avatar}
                           className="rounded-circle bg-light cover shadow-sm"
@@ -408,13 +411,13 @@ function Blog() {
                             objectFit: "cover",
                           }}
                         />
-                      </a>
-                      <a
+                      </Link>
+                      <Link
                         className="post-img text-decoration-none mt-3 text-dark"
-                        href="as"
+                        to={"/" + author.username}
                       >
                         <h5 class="card-title fw-bold">{author.name}</h5>
-                      </a>
+                      </Link>
                     </div>
                     <div style={{ fontSize: "15px" }}>
                       <p class="card-text my-3">{author.bio}</p>

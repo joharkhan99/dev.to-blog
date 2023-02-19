@@ -13,6 +13,7 @@ import "./index.css";
 import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Tag from "./Pages/Tag";
+import EditBlog from "./Pages/EditBlog";
 
 export const UserContext = React.createContext();
 
@@ -50,6 +51,16 @@ function App() {
                   <Navigate to="/" />
                 ) : (
                   <NewBlog />
+                )
+              }
+            />
+            <Route
+              path="/edit/:postid"
+              element={
+                user === null || user === undefined ? (
+                  <Navigate to="/" />
+                ) : (
+                  <EditBlog />
                 )
               }
             />
