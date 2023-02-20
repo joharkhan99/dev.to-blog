@@ -4,6 +4,7 @@ import { Link, useParams } from "react-router-dom";
 import Footer from "../Components/Footer.jsx";
 import Nav from "../Components/Nav.jsx";
 import Tags from "../Components/Tags.jsx";
+import Verified from "../Components/Verified.jsx";
 
 function Tag() {
   const params = useParams();
@@ -44,7 +45,10 @@ function Tag() {
               <div className="posts my-3">
                 {posts.map((post) => {
                   return (
-                    <div class="card w-100 overflow-hidden mb-2">
+                    <div
+                      className="card w-100 overflow-hidden mb-2"
+                      key={post._id}
+                    >
                       {post.image !== "" ? (
                         <div
                           className="card-header p-0"
@@ -57,7 +61,7 @@ function Tag() {
                           >
                             <img
                               src={post.image}
-                              class="card-img-top w-100 h-100"
+                              className="card-img-top w-100 h-100"
                               style={{ objectFit: "cover" }}
                               alt="..."
                             />
@@ -66,7 +70,7 @@ function Tag() {
                       ) : (
                         ""
                       )}
-                      <div class="card-body bg-white">
+                      <div className="card-body bg-white">
                         <div className="d-flex gap-2 align-items-center">
                           <Link
                             className="post-img text-decoration-none"
@@ -89,6 +93,11 @@ function Tag() {
                               >
                                 {post.author.name}
                               </Link>
+                              {post.author.role === "expert" ? (
+                                <Verified />
+                              ) : (
+                                ""
+                              )}
                             </div>
                             <span
                               className="text-decoration-none m-0 p-0 text-dark d-block"
@@ -143,7 +152,7 @@ function Tag() {
                                 }
                                 className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                               >
-                                <i class="fa-regular fa-heart pe-1"></i>
+                                <i className="fa-regular fa-heart pe-1"></i>
                                 {post.likes.length} reactions
                               </Link>
                               <Link
@@ -155,7 +164,7 @@ function Tag() {
                                 }
                                 className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                               >
-                                <i class="fa-regular fa-comment pe-1"></i>
+                                <i className="fa-regular fa-comment pe-1"></i>
                                 {post.comments.length} comments
                               </Link>
                             </div>
@@ -165,16 +174,16 @@ function Tag() {
                     </div>
                   );
                 })}
-                {/* <div class="card w-100 overflow-hidden mb-2">
+                {/* <div className="card w-100 overflow-hidden mb-2">
                 <div className="card-header p-0" style={{ height: "275px" }}>
                   <img
                     src={require("../assets/blog.webp")}
-                    class="card-img-top w-100 h-100"
+                    className="card-img-top w-100 h-100"
                     style={{ objectFit: "cover" }}
                     alt="..."
                   />
                 </div>
-                <div class="card-body bg-white">
+                <div className="card-body bg-white">
                   <div className="d-flex gap-2 align-items-center">
                     <a
                       className="post-img text-decoration-none"
@@ -251,21 +260,21 @@ function Tag() {
                           href="as"
                           className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                         >
-                          <i class="fa-regular fa-heart pe-1"></i>2 reactions
+                          <i className="fa-regular fa-heart pe-1"></i>2 reactions
                         </a>
                         <a
                           href="as"
                           className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                         >
-                          <i class="fa-regular fa-comment pe-1"></i>Add Comment
+                          <i className="fa-regular fa-comment pe-1"></i>Add Comment
                         </a>
                       </div>
                     </div>
                   </div>
                 </div>
               </div>
-              <div class="card w-100 overflow-hidden mb-2">
-                <div class="card-body bg-white">
+              <div className="card w-100 overflow-hidden mb-2">
+                <div className="card-body bg-white">
                   <div className="d-flex gap-2 align-items-center">
                     <a
                       className="post-img text-decoration-none"
@@ -339,13 +348,13 @@ function Tag() {
                           href="as"
                           className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                         >
-                          <i class="fa-regular fa-heart pe-1"></i>2 reactions
+                          <i className="fa-regular fa-heart pe-1"></i>2 reactions
                         </a>
                         <a
                           href="as"
                           className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                         >
-                          <i class="fa-regular fa-comment pe-1"></i>Add Comment
+                          <i className="fa-regular fa-comment pe-1"></i>Add Comment
                         </a>
                       </div>
                     </div>

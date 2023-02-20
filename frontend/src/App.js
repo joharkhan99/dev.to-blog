@@ -14,6 +14,7 @@ import axios from "axios";
 import React, { useEffect, useState } from "react";
 import Tag from "./Pages/Tag";
 import EditBlog from "./Pages/EditBlog";
+import Admin from "./Pages/Admin";
 
 export const UserContext = React.createContext();
 
@@ -21,7 +22,7 @@ function App() {
   const [user, setUser] = useState(null);
   const getUser = async () => {
     try {
-      const url = `${process.env.REACT_APP_API_URL}/auth/login/success`;
+      const url = `${process.env.REACT_APP_API_URL}/api/auth/login/success`;
       const response = await axios.get(url, { withCredentials: true });
       setUser(response.data.user);
     } catch (error) {
@@ -81,6 +82,16 @@ function App() {
                   <Navigate to="/" />
                 ) : (
                   <Dashboard />
+                )
+              }
+            />
+            <Route
+              path="/admin"
+              element={
+                user === null || user === undefined || user.role === "" ? (
+                  <Navigate to="/" />
+                ) : (
+                  <Admin />
                 )
               }
             />

@@ -91,7 +91,7 @@ export const getPost = async (req, res) => {
       const post = await Post.findOne({ author: author._id, titleURL: title });
       // console.log(post);
       const comments = await Comment.find({ post: post._id })
-        .populate("author", "name username avatar")
+        .populate("author", "name username avatar role")
         .sort({ date: -1 });
       console.log(comments);
       res.json({ post, author, comments });
@@ -117,7 +117,7 @@ export const getEditPost = async (req, res) => {
 
 export const getAllPost = async function (req, res) {
   var posts = await Post.find()
-    .populate("author", "name username avatar")
+    .populate("author", "name username avatar role")
     .sort({ date: 1 });
   res.json(posts);
 };
@@ -142,7 +142,7 @@ export const DeletePost = async function (req, res) {
 
 export const getAllLatestPost = async function (req, res) {
   var posts = await Post.find()
-    .populate("author", "name username avatar")
+    .populate("author", "name username avatar role")
     .sort({ date: -1 });
   res.json(posts);
 };
@@ -186,7 +186,7 @@ export const getAllTopPost = async function (req, res) {
         createdAt: 1,
         likesCount: { $size: "$likes" },
         commentsCount: { $size: "$comments" },
-        author: { username: 1, email: 1, avatar: 1, name: 1 },
+        author: { username: 1, email: 1, avatar: 1, name: 1, role: 1 },
       },
     },
     { $sort: { likesCount: -1, commentsCount: -1 } },
@@ -202,7 +202,7 @@ export const getTags = async function (req, res) {
 export const getTagPosts = async function (req, res) {
   const tag = req.params.tag;
   var posts = await Post.find({ tags: tag })
-    .populate("author", "name username avatar")
+    .populate("author", "name username avatar role")
     .sort({ date: -1 });
   res.json(posts);
 };

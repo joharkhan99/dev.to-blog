@@ -190,10 +190,10 @@ const NewBlog = () => {
     <>
       <ToastContainer />
       <div className="container-fluid bg-transparent">
-        <nav class="navbar">
-          <div class="container p-0">
+        <nav className="navbar">
+          <div className="container p-0">
             <div className="d-flex justify-content-start align-items-center">
-              <Link class="navbar-brand" to="/">
+              <Link className="navbar-brand" to="/">
                 <img
                   src={require("../assets/logo.png")}
                   alt="Bootstrap"
@@ -204,8 +204,8 @@ const NewBlog = () => {
             </div>
 
             <div className="d-flex justify-content-end align-items-center gap-2">
-              <Link to="/" class="btn btn-outline-dark fw-bold border-0">
-                <i class="fa-solid fa-xmark"></i>
+              <Link to="/" className="btn btn-outline-dark fw-bold border-0">
+                <i className="fa-solid fa-xmark"></i>
               </Link>
             </div>
           </div>
@@ -216,13 +216,13 @@ const NewBlog = () => {
         <div className="row">
           <div className="col-md-10">
             <ul
-              class="nav nav-tabs justify-content-end border-0"
+              className="nav nav-tabs justify-content-end border-0"
               id="myTab"
               role="tablist"
             >
-              <li class="nav-item" role="presentation">
+              <li className="nav-item" role="presentation">
                 <button
-                  class="nav-link text-dark active"
+                  className="nav-link text-dark active"
                   id="editor-tab"
                   data-bs-toggle="tab"
                   data-bs-target="#editor"
@@ -234,9 +234,9 @@ const NewBlog = () => {
                   Editor
                 </button>
               </li>
-              <li class="nav-item" role="presentation">
+              <li className="nav-item" role="presentation">
                 <button
-                  class="nav-link text-dark"
+                  className="nav-link text-dark"
                   id="preview-tab"
                   data-bs-toggle="tab"
                   data-bs-target="#preview"
@@ -249,9 +249,9 @@ const NewBlog = () => {
                 </button>
               </li>
             </ul>
-            <div class="tab-content" id="myTabContent">
+            <div className="tab-content" id="myTabContent">
               <div
-                class="tab-pane fade show active"
+                className="tab-pane fade show active"
                 id="editor"
                 role="tabpanel"
                 aria-labelledby="editor-tab"
@@ -260,11 +260,14 @@ const NewBlog = () => {
                   <div className="card px-md-4">
                     <div className="card-body">
                       <div>
-                        <label for="formFileLg" class="form-label fw-bold">
+                        <label
+                          htmlFor="formFileLg"
+                          className="form-label fw-bold"
+                        >
                           Add cover image
                         </label>
                         <input
-                          class="form-control form-control-md w-auto shadow-none"
+                          className="form-control form-control-md w-auto shadow-none"
                           id="coverImage"
                           name="coverImage"
                           onChange={handlePhoto}
@@ -275,7 +278,7 @@ const NewBlog = () => {
                         <textarea
                           name="text"
                           placeholder="New post title here..."
-                          class="fw-bolder shadow-none fs-1 text-dark form-control border-0"
+                          className="fw-bolder shadow-none fs-1 text-dark form-control border-0"
                           value={title}
                           onInput={(e) => {
                             settitle(e.target.value);
@@ -319,24 +322,24 @@ const NewBlog = () => {
                 </form>
               </div>
               <div
-                class="tab-pane fade"
+                className="tab-pane fade"
                 id="preview"
                 role="tabpanel"
                 aria-labelledby="preview-tab"
               >
-                <div class="card w-100 overflow-hidden px-md-0">
+                <div className="card w-100 overflow-hidden px-md-0">
                   <div
                     className={"card-header p-0 " + imagePreviewClass}
                     style={{ height: "275px" }}
                   >
                     <img
                       src={imagePreviewSrc}
-                      class="card-img-top w-100 h-100"
+                      className="card-img-top w-100 h-100"
                       style={{ objectFit: "cover" }}
                       alt="..."
                     />
                   </div>
-                  <div class="card-body bg-white p-lg-5">
+                  <div className="card-body bg-white p-lg-5">
                     <div className="post-details mb-5">
                       <h1 className="fw-bolder fs-1 py-3 text-dark">{title}</h1>
                       <div

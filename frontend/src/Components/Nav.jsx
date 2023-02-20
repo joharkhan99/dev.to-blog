@@ -9,10 +9,10 @@ const Nav = () => {
   const user = useContext(UserContext);
   return (
     <div className="container-fluid border-bottom bg-white fixed-top">
-      <nav class="navbar">
-        <div class="container p-0">
+      <nav className="navbar">
+        <div className="container p-0">
           <div className="d-flex justify-content-start align-items-center">
-            <Link class="navbar-brand" to="/">
+            <Link className="navbar-brand" to="/">
               <img
                 src={require("../assets/logo.png")}
                 alt="Bootstrap"
@@ -20,16 +20,16 @@ const Nav = () => {
               />
             </Link>
             {/* <form role="search" className="d-none d-sm-block">
-              <div class="input-group border border-secondary rounded p-0 m-0">
+              <div className="input-group border border-secondary rounded p-0 m-0">
                 <input
                   type="text"
-                  class="form-control border-white shadow-none"
+                  className="form-control border-white shadow-none"
                   placeholder="Search..."
                   aria-label="Search..."
                   aria-describedby="button-addon2"
                 />
                 <button
-                  class="btn btn-outline-primary border-white text-dark rounded"
+                  className="btn btn-outline-primary border-white text-dark rounded"
                   type="button"
                   id="button-addon2"
                 >
@@ -38,7 +38,7 @@ const Nav = () => {
                     width="20"
                     height="20"
                     fill="currentColor"
-                    class="bi bi-search"
+                    className="bi bi-search"
                     viewBox="0 0 16 16"
                   >
                     <path d="M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001c.03.04.062.078.098.115l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85a1.007 1.007 0 0 0-.115-.1zM12 6.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0z" />
@@ -58,22 +58,22 @@ const Nav = () => {
                   Login
                 </Link>
 
-                <Link to="/signup" class="btn btn-outline-primary fw-bold">
+                <Link to="/signup" className="btn btn-outline-primary fw-bold">
                   Create account
                 </Link>
               </>
             ) : (
               <>
-                <Link to="/new" class="btn btn-outline-primary fw-bold">
+                <Link to="/new" className="btn btn-outline-primary fw-bold">
                   Create Post
                 </Link>
                 <a
                   href="as"
                   className="btn btn-outline-primary border-white position-relative"
                 >
-                  <i class="fa-regular fa-bell text-dark fs-4"></i>
+                  <i className="fa-regular fa-bell text-dark fs-4"></i>
                   <span
-                    class="badge text-white bg-danger position-absolute top-0 start-50 px-1"
+                    className="badge text-white bg-danger position-absolute top-0 start-50 px-1"
                     style={{
                       paddingTop: "2px",
                       paddingBottom: "2px",
@@ -82,9 +82,9 @@ const Nav = () => {
                     9
                   </span>
                 </a>
-                <div class="dropdown">
+                <div className="dropdown">
                   <button
-                    class="border-0 bg-transparent p-0"
+                    className="border-0 bg-transparent p-0"
                     type="button"
                     data-bs-toggle="dropdown"
                     aria-expanded="false"
@@ -98,12 +98,12 @@ const Nav = () => {
                     />
                   </button>
                   <ul
-                    class="dropdown-menu dropdown-menu-end my-1 pb-3 px-2 shadow-sm"
+                    className="dropdown-menu dropdown-menu-end my-1 pb-3 px-2 shadow-sm"
                     style={{ width: "250px" }}
                   >
                     <li className="border-bottom my-2 pb-2">
                       <Link
-                        class="dropdown-item rounded text-dark"
+                        className="dropdown-item rounded text-dark"
                         to={"/" + user.username}
                       >
                         <b className="d-block">{user.name}</b>
@@ -112,17 +112,32 @@ const Nav = () => {
                         </span>
                       </Link>
                     </li>
+
+                    {user.role === "admin" ? (
+                      <li>
+                        <Link
+                          className="dropdown-item rounded text-dark py-2"
+                          to="/admin"
+                        >
+                          <span>Admin</span>
+                        </Link>
+                      </li>
+                    ) : (
+                      ""
+                    )}
+
                     <li>
                       <Link
-                        class="dropdown-item rounded text-dark py-2"
+                        className="dropdown-item rounded text-dark py-2"
                         to="/dashboard"
                       >
                         <span>Dashboard</span>
                       </Link>
                     </li>
+
                     <li>
                       <Link
-                        class="dropdown-item rounded text-dark py-2"
+                        className="dropdown-item rounded text-dark py-2"
                         to="/new"
                       >
                         <span>Create Post</span>
@@ -130,7 +145,7 @@ const Nav = () => {
                     </li>
                     <li>
                       <Link
-                        class="dropdown-item rounded text-dark py-2"
+                        className="dropdown-item rounded text-dark py-2"
                         to="/userinfo"
                       >
                         <span>Profile Settings</span>
@@ -138,7 +153,7 @@ const Nav = () => {
                     </li>
                     <li>
                       <button
-                        class="dropdown-item rounded text-dark py-2"
+                        className="dropdown-item rounded text-dark py-2"
                         onClick={logout}
                       >
                         <span>Sign Out</span>

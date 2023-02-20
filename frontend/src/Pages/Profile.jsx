@@ -3,6 +3,7 @@ import React, { useEffect, useState } from "react";
 import { Link, useParams } from "react-router-dom";
 import Footer from "../Components/Footer";
 import Nav from "../Components/Nav";
+import Verified from "../Components/Verified";
 
 const Profile = () => {
   const params = useParams();
@@ -66,13 +67,16 @@ const Profile = () => {
                 </div>
               </div>
               <div className="card-body pb-4">
-                <h1 class="fw-bolder fs-2 text-dark">{profileUser.name}</h1>
+                <h1 className="fw-bolder fs-2 text-dark">
+                  {profileUser.name}
+                  {profileUser.role === "expert" ? <Verified /> : ""}
+                </h1>
                 <p className="bio mb-4">{profileUser.bio}</p>
                 <div className="user-details text-secondary">
                   {profileUser.location !== "" ||
                   profileUser.location !== null ? (
                     <span className="me-4 d-inline-block">
-                      <i class="fa-solid fa-location-dot pe-2 fs-5"></i>
+                      <i className="fa-solid fa-location-dot pe-2 fs-5"></i>
                       <span style={{ fontSize: "14px" }}>
                         {profileUser.location}
                       </span>
@@ -82,7 +86,7 @@ const Profile = () => {
                   )}
 
                   <span className="me-4 d-inline-block">
-                    <i class="fa-solid fa-cake-candles pe-2 fs-5"></i>
+                    <i className="fa-solid fa-cake-candles pe-2 fs-5"></i>
                     <span style={{ fontSize: "14px" }}>
                       Joined on {formatDate(profileUser.joinDate)}
                     </span>
@@ -111,15 +115,15 @@ const Profile = () => {
                 <div className="card overflow-hidden">
                   <div className="card-body bg-light pb-0">
                     <div className="d-flex align-items-center gap-3 mb-3">
-                      <i class="fa-solid fa-table-list text-secondary fs-5"></i>
+                      <i className="fa-solid fa-table-list text-secondary fs-5"></i>
                       <span>{posts.length} post(s) published</span>
                     </div>
                     <div className="d-flex align-items-center gap-3 mb-3">
-                      <i class="fa-regular fa-comment text-secondary fs-5"></i>
+                      <i className="fa-regular fa-comment text-secondary fs-5"></i>
                       <span>{comments.length} comments written</span>
                     </div>
                     <div className="d-flex align-items-center gap-3 mb-3">
-                      <i class="fa-regular fa-heart text-secondary fs-5"></i>
+                      <i className="fa-regular fa-heart text-secondary fs-5"></i>
                       <span>{likes} reactions</span>
                     </div>
                   </div>
@@ -128,8 +132,11 @@ const Profile = () => {
               <div className="col-md-8">
                 {posts.map((post) => {
                   return (
-                    <div class="card w-100 overflow-hidden mb-2">
-                      <div class="card-body bg-white">
+                    <div
+                      className="card w-100 overflow-hidden mb-2"
+                      key={post._id}
+                    >
+                      <div className="card-body bg-white">
                         <div className="d-flex gap-2 align-items-center">
                           <Link
                             className="post-img text-decoration-none"
@@ -154,6 +161,11 @@ const Profile = () => {
                               >
                                 {profileUser.name}
                               </Link>
+                              {profileUser.role === "expert" ? (
+                                <Verified />
+                              ) : (
+                                ""
+                              )}
                             </div>
                             <a
                               href="as"
@@ -202,14 +214,14 @@ const Profile = () => {
                               style={{ fontSize: "14px" }}
                             >
                               <span className="text-decoration-none text-dark bg-light px-2 py-1 rounded">
-                                <i class="fa-regular fa-heart pe-1"></i>
+                                <i className="fa-regular fa-heart pe-1"></i>
                                 {post.likes.length} reactions
                               </span>
                               <span
                                 href="as"
                                 className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                               >
-                                <i class="fa-regular fa-comment pe-1"></i>
+                                <i className="fa-regular fa-comment pe-1"></i>
                                 {post.comments.length} Comments
                               </span>
                             </div>
@@ -221,13 +233,16 @@ const Profile = () => {
                 })}
 
                 <div className="user_comments mt-4">
-                  <ul class="list-group">
-                    <li class="list-group-item py-3 fs-5 fw-bold">
+                  <ul className="list-group">
+                    <li className="list-group-item py-3 fs-5 fw-bold">
                       Recent Comments
                     </li>
                     {comments.map((comment) => {
                       return (
-                        <li class="list-group-item dropdown-item">
+                        <li
+                          className="list-group-item dropdown-item"
+                          key={comment._id}
+                        >
                           <Link
                             to={
                               "/" +

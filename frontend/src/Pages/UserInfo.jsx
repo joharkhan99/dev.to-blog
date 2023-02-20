@@ -109,21 +109,21 @@ const UserInfo = () => {
       <Nav />
       <ToastContainer />
 
-      <div class="container mt-5 pt-5">
-        <div class="row mt-5">
-          <div class="col-md-8 mx-auto">
+      <div className="container mt-5 pt-5">
+        <div className="row mt-5">
+          <div className="col-md-8 mx-auto">
             <form encType="multipart/form-data" onSubmit={handleSubmit}>
               <div className="card mb-4">
                 <div className="card-body">
                   <h5 className="fw-bold fs-5 mb-3">User</h5>
                   <div>
-                    <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label">
+                    <div className="mb-4">
+                      <label for="exampleInputEmail1" className="form-label">
                         Name
                       </label>
                       <input
                         type="text"
-                        class="form-control shadow-none"
+                        className="form-control shadow-none"
                         id="name"
                         name="name"
                         value={inputs.name}
@@ -132,13 +132,13 @@ const UserInfo = () => {
                         placeholder="Masters in XYZ.."
                       />
                     </div>
-                    <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label">
+                    <div className="mb-4">
+                      <label for="exampleInputEmail1" className="form-label">
                         Username
                       </label>
                       <input
                         type="text"
-                        class="form-control shadow-none"
+                        className="form-control shadow-none"
                         id="username"
                         name="username"
                         value={inputs.username}
@@ -147,8 +147,8 @@ const UserInfo = () => {
                         placeholder="New York, USA, etc.."
                       />
                     </div>
-                    <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label">
+                    <div className="mb-4">
+                      <label for="exampleInputEmail1" className="form-label">
                         Profile Image
                       </label>
                       <div className="d-flex gap-2 align-items-center">
@@ -168,7 +168,7 @@ const UserInfo = () => {
                         />
                         <input
                           type="file"
-                          class="form-control shadow-none d-inline-block w-auto"
+                          className="form-control shadow-none d-inline-block w-auto"
                           id="avatar"
                           name="avatar"
                           onChange={handlePhoto}
@@ -184,8 +184,8 @@ const UserInfo = () => {
                 <div className="card-body">
                   <h5 className="fw-bold fs-5 mb-3">Basic</h5>
                   <div>
-                    <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label">
+                    <div className="mb-4">
+                      <label for="exampleInputEmail1" className="form-label">
                         Write a brief bio about yourself
                       </label>
                       <textarea
@@ -197,13 +197,13 @@ const UserInfo = () => {
                         onPaste={handleInputChange}
                       ></textarea>
                     </div>
-                    <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label">
+                    <div className="mb-4">
+                      <label for="exampleInputEmail1" className="form-label">
                         Your Location
                       </label>
                       <input
                         type="text"
-                        class="form-control shadow-none"
+                        className="form-control shadow-none"
                         id="location"
                         name="location"
                         value={inputs.location}
@@ -220,13 +220,13 @@ const UserInfo = () => {
                 <div className="card-body">
                   <h5 className="fw-bold fs-5 mb-3">Work</h5>
                   <div>
-                    <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label">
+                    <div className="mb-4">
+                      <label for="exampleInputEmail1" className="form-label">
                         Your Education
                       </label>
                       <input
                         type="text"
-                        class="form-control shadow-none"
+                        className="form-control shadow-none"
                         id="education"
                         name="education"
                         value={inputs.education}
@@ -235,13 +235,13 @@ const UserInfo = () => {
                         placeholder="Masters in XYZ.."
                       />
                     </div>
-                    <div class="mb-4">
-                      <label for="exampleInputEmail1" class="form-label">
+                    <div className="mb-4">
+                      <label for="exampleInputEmail1" className="form-label">
                         Work Experience
                       </label>
                       <input
                         type="text"
-                        class="form-control shadow-none"
+                        className="form-control shadow-none"
                         id="experience"
                         name="experience"
                         value={inputs.experience}
@@ -255,7 +255,7 @@ const UserInfo = () => {
               </div>
 
               <div className="position-sticky d-block bottom-0 w-100 p-3 bg-white rounded border my-3 mb-5">
-                <button type="submit" class="btn btn-primary w-100 fw-bold">
+                <button type="submit" className="btn btn-primary w-100 fw-bold">
                   Save Profile
                 </button>
               </div>

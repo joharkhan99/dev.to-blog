@@ -5,6 +5,7 @@ import { toast, ToastContainer } from "react-toastify";
 import { UserContext } from "../App.js";
 import Footer from "../Components/Footer.jsx";
 import Nav from "../Components/Nav.jsx";
+import Verified from "../Components/Verified.jsx";
 
 function Blog() {
   const params = useParams();
@@ -148,9 +149,9 @@ function Blog() {
       {post && post !== undefined && (
         <div className="container py-4 mt-5">
           <div className="row pt-4">
-            <div class="col-md-1 d-none d-sm-block col-xs-1 col-sm-1 ps-sm-0">
+            <div className="col-md-1 d-none d-sm-block col-xs-1 col-sm-1 ps-sm-0">
               <div
-                class="d-flex gap-4 align-items-sm-start flex-column gap-4"
+                className="d-flex gap-4 align-items-sm-start flex-column gap-4"
                 style={{
                   position: "sticky",
                   top: "calc(56px + 1rem)",
@@ -163,7 +164,7 @@ function Blog() {
                     className="bg-transparent border-0"
                     onClick={likePost}
                   >
-                    <i class="fa-regular fa-heart d-block fs-4"></i>
+                    <i className="fa-regular fa-heart d-block fs-4"></i>
                     <span style={{ fontSize: "15px" }}>
                       {post.likes.length}
                     </span>
@@ -171,7 +172,7 @@ function Blog() {
                 </div>
                 <div className="text-center">
                   <button type="button" className="bg-transparent border-0">
-                    <i class="fa-regular fa-comment d-block fs-4"></i>
+                    <i className="fa-regular fa-comment d-block fs-4"></i>
                     <span style={{ fontSize: "15px" }}>
                       {post.comments.length}
                     </span>
@@ -179,7 +180,7 @@ function Blog() {
                 </div>
                 <div className="text-center">
                   <button type="button" className="bg-transparent border-0">
-                    <i class="fa-regular fa-bookmark d-block fs-4"></i>
+                    <i className="fa-regular fa-bookmark d-block fs-4"></i>
                     <span style={{ fontSize: "15px" }}>
                       {post.bookmarks.length}
                     </span>
@@ -193,16 +194,16 @@ function Blog() {
                       data-bs-toggle="dropdown"
                       aria-expanded="false"
                     >
-                      <i class="fa-solid fa-ellipsis d-block fs-4"></i>
+                      <i className="fa-solid fa-ellipsis d-block fs-4"></i>
                     </button>
-                    <ul class="dropdown-menu dropdown-menu-end my-1">
+                    <ul className="dropdown-menu dropdown-menu-end my-1">
                       <li>
-                        <a class="dropdown-item" href="as">
+                        <a className="dropdown-item" href="as">
                           Action
                         </a>
                       </li>
                       <li>
-                        <a class="dropdown-item" href="as">
+                        <a className="dropdown-item" href="as">
                           Action
                         </a>
                       </li>
@@ -213,12 +214,12 @@ function Blog() {
             </div>
 
             <div className="col-xl-8 col-lg-8 col-md-8 col-sm-10 col-xs-12 mb-4">
-              <div class="card w-100 overflow-hidden mb-2">
+              <div className="card w-100 overflow-hidden mb-2">
                 {post.image !== "" ? (
                   <div className="card-header p-0" style={{ height: "275px" }}>
                     <img
                       src={post.image}
-                      class="card-img-top w-100 h-100"
+                      className="card-img-top w-100 h-100"
                       style={{ objectFit: "cover" }}
                       alt={post.title}
                     />
@@ -226,7 +227,7 @@ function Blog() {
                 ) : (
                   ""
                 )}
-                <div class="card-body bg-white p-lg-5 pt-4">
+                <div className="card-body bg-white p-lg-5 pt-4">
                   <div className="d-flex gap-2 align-items-center">
                     <Link
                       className="post-img text-decoration-none"
@@ -249,6 +250,7 @@ function Blog() {
                         >
                           {author.name}
                         </Link>
+                        {author.role === "expert" ? <Verified /> : ""}
                       </div>
                       <div
                         className="text-decoration-none m-0 p-0 text-dark d-block"
@@ -343,11 +345,16 @@ function Blog() {
                                 />
                               </div>
                               <div style={{ width: "90%" }}>
-                                <div class="card">
-                                  <div class="card-body">
+                                <div className="card">
+                                  <div className="card-body">
                                     <div className="d-flex gap-3">
                                       <span className="d-block fs-6 text-dark fw-bold">
                                         {comment.author.name}
+                                        {comment.author.role === "expert" ? (
+                                          <Verified />
+                                        ) : (
+                                          ""
+                                        )}
                                       </span>
                                       <span className="d-block fs-6 text-secondary">
                                         {formatDate(comment.createdAt)}
@@ -367,7 +374,7 @@ function Blog() {
                                     value={comment._id}
                                     onClick={likeComment}
                                   >
-                                    <i class="fa-regular fa-heart pe-1"></i>
+                                    <i className="fa-regular fa-heart pe-1"></i>
                                     {comment.likes.length} reactions
                                   </button>
                                 </div>
@@ -384,15 +391,15 @@ function Blog() {
 
             <div className="col-xl-3 col-md-3 col-sm-12 p-0 col-xs-12">
               <div
-                class="d-flex gap-4 align-items-sm-start justify-content-center"
+                className="d-flex gap-4 align-items-sm-start justify-content-center"
                 style={{
                   position: "sticky",
                   top: "calc(56px + 1rem)",
                 }}
               >
-                <div class="card bg-light w-100">
-                  <div class="card-header bg-dark p-3"></div>
-                  <div class="card-body pb-0">
+                <div className="card bg-light w-100">
+                  <div className="card-header bg-dark p-3"></div>
+                  <div className="card-body pb-0">
                     <div
                       className="d-flex gap-2 align-items-center"
                       style={{ marginTop: "-31px" }}
@@ -416,22 +423,22 @@ function Blog() {
                         className="post-img text-decoration-none mt-3 text-dark"
                         to={"/" + author.username}
                       >
-                        <h5 class="card-title fw-bold">{author.name}</h5>
+                        <h5 className="card-title fw-bold">{author.name}</h5>
                       </Link>
                     </div>
                     <div style={{ fontSize: "15px" }}>
-                      <p class="card-text my-3">{author.bio}</p>
-                      <p class="card-text my-3">
+                      <p className="card-text my-3">{author.bio}</p>
+                      <p className="card-text my-3">
                         <b>EDUCATION</b>
                         <br />
                         {author.education}
                       </p>
-                      <p class="card-text my-3">
+                      <p className="card-text my-3">
                         <b>WORK</b>
                         <br />
                         {author.experience}
                       </p>
-                      <p class="card-text my-3">
+                      <p className="card-text my-3">
                         <b>JOINED</b>
                         <br />
                         {formatDate(author.joinDate)}

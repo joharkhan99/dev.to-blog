@@ -8,6 +8,7 @@ const userSchema = new Schema({
   email: { type: String, required: true, unique: true }, //'unique' adds index => fastens the querying prcoess
   password: { type: String, required: true, minLength: 6 },
   username: { type: String, unique: true },
+  role: { type: String, default: "user" },
   avatar: { type: String, default: "" },
   bio: { type: String, default: "" },
   location: { type: String, default: "" },

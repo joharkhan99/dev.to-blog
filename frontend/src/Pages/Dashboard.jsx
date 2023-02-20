@@ -79,7 +79,7 @@ const Dashboard = () => {
             <h2 className="fs-4 text-dark fw-bolder mb-4">Posts</h2>
             {posts.map((post) => {
               return (
-                <div className="card mb-2">
+                <div className="card mb-2" key={post._id}>
                   <div className="card-body">
                     <div className="row">
                       <div className="col-md-6">
@@ -98,15 +98,15 @@ const Dashboard = () => {
                         <div className="d-flex justify-content-between align-items-center h-100">
                           <div className="d-flex gap-3 text-secondary">
                             <span className="bg-transparent border-0">
-                              <i class="fa-regular fa-heart pe-1"></i>
+                              <i className="fa-regular fa-heart pe-1"></i>
                               <span>{post.likes.length}</span>
                             </span>
                             <span className="bg-transparent border-0">
-                              <i class="fa-regular fa-comment pe-1"></i>
+                              <i className="fa-regular fa-comment pe-1"></i>
                               <span>{post.comments.length}</span>
                             </span>
                             <span className="bg-transparent border-0">
-                              <i class="fa-regular fa-bookmark pe-1"></i>
+                              <i className="fa-regular fa-bookmark pe-1"></i>
                               <span>0</span>
                             </span>
                           </div>

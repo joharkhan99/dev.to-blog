@@ -22,11 +22,11 @@ function Tags() {
   return (
     <div className="side-tags">
       {tags && (
-        <div class="accordion" id="tags_accord">
-          <div class="accordion-item bg-transparent border-0">
-            <h2 class="accordion-header border-0" id="tags_accord_heading">
+        <div className="accordion" id="tags_accord">
+          <div className="accordion-item bg-transparent border-0">
+            <h2 className="accordion-header border-0" id="tags_accord_heading">
               <button
-                class="accordion-button bg-transparent shadow-none pt-1"
+                className="accordion-button bg-transparent shadow-none pt-1"
                 type="button"
                 data-bs-toggle="collapse"
                 data-bs-target="#accord_tags_collapse"
@@ -40,14 +40,14 @@ function Tags() {
             </h2>
             <div
               id="accord_tags_collapse"
-              class="accordion-collapse collapse show"
+              className="accordion-collapse collapse show"
               aria-labelledby="tags_accord_heading"
             >
-              <div class="accordion-body">
+              <div className="accordion-body">
                 <ul className="p-0 m-0 list-unstyled">
                   {tags.map((tag) => {
                     return (
-                      <li className=" border-0 p-2">
+                      <li className=" border-0 p-2" key={tag}>
                         <Link
                           to={"/tag/" + tag}
                           className="text-decoration-none d-block text-secondary dropdown-item"

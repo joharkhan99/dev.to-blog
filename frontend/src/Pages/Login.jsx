@@ -17,14 +17,14 @@ const Login = () => {
         <div className="row">
           <div className="col-md-6 mx-auto">
             <div className="card text-center px-md-4 my-5 py-4">
-              <div class="card-body">
+              <div className="card-body">
                 <h2 className="fw-bolder">Welcome to DEV Community</h2>
                 <p>
                   DEV Community is a community of 1,006,612 amazing developers
                 </p>
                 <div className="d-flex gap-2 flex-column mt-4 mb-3">
                   <button
-                    class="btn btn-lg fs-6 fw-bold btn-google bg-light btn-block btn-outline d-flex border justify-content-center py-2"
+                    className="btn btn-lg fs-6 fw-bold btn-google bg-light btn-block btn-outline d-flex border justify-content-center py-2"
                     onClick={googleAuth}
                   >
                     <img
@@ -52,29 +52,29 @@ const Login = () => {
                 </div> */}
 
                 {/* <form className="text-start pt-3">
-                  <div class="mb-3">
-                    <label for="email" class="form-label fw-bold">
+                  <div className="mb-3">
+                    <label for="email" className="form-label fw-bold">
                       Email
                     </label>
                     <input
                       type="email"
-                      class="form-control shadow-none"
+                      className="form-control shadow-none"
                       id="email"
                     />
                   </div>
-                  <div class="mb-3">
-                    <label for="password" class="form-label fw-bold">
+                  <div className="mb-3">
+                    <label for="password" className="form-label fw-bold">
                       Password
                     </label>
                     <input
                       type="password"
-                      class="form-control shadow-none"
+                      className="form-control shadow-none"
                       id="password"
                     />
                   </div>
                   <button
                     type="submit"
-                    class="btn btn-lg fs-6 fw-bold btn-google bg-primary btn-block btn-outline border py-2 text-white w-100"
+                    className="btn btn-lg fs-6 fw-bold btn-google bg-primary btn-block btn-outline border py-2 text-white w-100"
                   >
                     Continue
                   </button>

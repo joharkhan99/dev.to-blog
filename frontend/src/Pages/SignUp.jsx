@@ -18,14 +18,14 @@ const SignUp = () => {
         <div className="row">
           <div className="col-md-6 mx-auto">
             <div className="card text-center px-md-4 my-5 py-4">
-              <div class="card-body">
+              <div className="card-body">
                 <h2 className="fw-bolder">Welcome to DEV Community</h2>
                 <p>
                   DEV Community is a community of 1,006,612 amazing developers
                 </p>
                 <div className="d-flex gap-2 flex-column mt-4 mb-3">
                   <button
-                    class="btn btn-lg fs-6 fw-bold btn-google bg-light btn-block btn-outline d-flex border justify-content-center py-2"
+                    className="btn btn-lg fs-6 fw-bold btn-google bg-light btn-block btn-outline d-flex border justify-content-center py-2"
                     onClick={googleAuth}
                   >
                     <img
