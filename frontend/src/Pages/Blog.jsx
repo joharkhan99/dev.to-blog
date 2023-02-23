@@ -149,71 +149,7 @@ function Blog() {
       {post && post !== undefined && (
         <div className="container py-4 mt-5">
           <div className="row pt-4">
-            <div className="col-md-1 d-none d-sm-block col-xs-1 col-sm-1 ps-sm-0">
-              <div
-                className="d-flex gap-4 align-items-sm-start flex-column gap-4"
-                style={{
-                  position: "sticky",
-                  top: "calc(56px + 1rem)",
-                  zIndex: "1",
-                }}
-              >
-                <div className="text-center">
-                  <button
-                    type="button"
-                    className="bg-transparent border-0"
-                    onClick={likePost}
-                  >
-                    <i className="fa-regular fa-heart d-block fs-4"></i>
-                    <span style={{ fontSize: "15px" }}>
-                      {post.likes.length}
-                    </span>
-                  </button>
-                </div>
-                <div className="text-center">
-                  <button type="button" className="bg-transparent border-0">
-                    <i className="fa-regular fa-comment d-block fs-4"></i>
-                    <span style={{ fontSize: "15px" }}>
-                      {post.comments.length}
-                    </span>
-                  </button>
-                </div>
-                <div className="text-center">
-                  <button type="button" className="bg-transparent border-0">
-                    <i className="fa-regular fa-bookmark d-block fs-4"></i>
-                    <span style={{ fontSize: "15px" }}>
-                      {post.bookmarks.length}
-                    </span>
-                  </button>
-                </div>
-                <div className="text-center">
-                  <div className="dropdown">
-                    <button
-                      type="button"
-                      className="bg-transparent border-0"
-                      data-bs-toggle="dropdown"
-                      aria-expanded="false"
-                    >
-                      <i className="fa-solid fa-ellipsis d-block fs-4"></i>
-                    </button>
-                    <ul className="dropdown-menu dropdown-menu-end my-1">
-                      <li>
-                        <a className="dropdown-item" href="as">
-                          Action
-                        </a>
-                      </li>
-                      <li>
-                        <a className="dropdown-item" href="as">
-                          Action
-                        </a>
-                      </li>
-                    </ul>
-                  </div>
-                </div>
-              </div>
-            </div>
-
-            <div className="col-xl-8 col-lg-8 col-md-8 col-sm-10 col-xs-12 mb-4">
+            <div className="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 mb-4">
               <div className="card w-100 overflow-hidden mb-2">
                 {post.image !== "" ? (
                   <div className="card-header p-0" style={{ height: "275px" }}>
@@ -389,7 +325,7 @@ function Blog() {
               </div>
             </div>
 
-            <div className="col-xl-3 col-md-3 col-sm-12 p-0 col-xs-12">
+            <div className="col-xl-3 col-md-3 col-sm-12 col-xs-12">
               <div
                 className="d-flex gap-4 align-items-sm-start justify-content-center"
                 style={{

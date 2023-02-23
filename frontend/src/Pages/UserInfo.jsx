@@ -15,13 +15,10 @@ const UserInfo = () => {
     education: "",
     experience: "",
   });
-  const [avatar, setAvatar] = useState("");
-  const [userUploadedImage, setuserUploadedImage] = useState(false);
 
   const user = useContext(UserContext);
   useEffect(() => {
     setInputs(user);
-    setAvatar(user.avatar);
   }, []);
 
   const handleInputChange = (e) => {
@@ -31,77 +28,30 @@ const UserInfo = () => {
       ...inputs,
       [name]: value,
     });
-    // setInputs({ ...user, [e.target.name]: e.target.value });
-  };
-  const handlePhoto = (e) => {
-    setAvatar(e.target.files[0]);
-    if (e.target.files[0]) setuserUploadedImage(true);
-  };
-
-  const upload = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("avatar", avatar);
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/users/upload`,
-        formData
-      );
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     const url = `${process.env.REACT_APP_API_URL}/api/users/update`;
-    if (userUploadedImage) {
-      const imgUrl = await upload();
-      await axios
-        .post(
-          url,
-          {
-            inputs,
-            newavatar: `${process.env.REACT_APP_API_URL}/users/${imgUrl}`,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          if (res.data.error) {
-            toast.success(res.data.message, { type: "error" });
-          } else {
-            toast.success("Profile Updated Successfully", {
-              type: "success",
-              autoClose: 500,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 500);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      await axios
-        .post(url, { inputs, newavatar: avatar }, { withCredentials: true })
-        .then((res) => {
-          if (res.data.error) {
-            toast.success(res.data.message, { type: "error" });
-          } else {
-            toast.success("Profile Updated Successfully", {
-              type: "success",
-              autoClose: 500,
-            });
-            setTimeout(() => {
-              window.location.reload();
-            }, 500);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+
+    await axios
+      .post(url, { inputs, newavatar: user.avatar }, { withCredentials: true })
+      .then((res) => {
+        if (res.data.error) {
+          toast.success(res.data.message, { type: "error" });
+        } else {
+          toast.success("Profile Updated Successfully", {
+            type: "success",
+            autoClose: 500,
+          });
+          setTimeout(() => {
+            window.location.reload();
+          }, 500);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -146,35 +96,6 @@ const UserInfo = () => {
                         onPaste={handleInputChange}
                         placeholder="New York, USA, etc.."
                       />
-                    </div>
-                    <div className="mb-4">
-                      <label for="exampleInputEmail1" className="form-label">
-                        Profile Image
-                      </label>
-                      <div className="d-flex gap-2 align-items-center">
-                        <img
-                          src={
-                            // user.avatar.includes("http") ||
-                            // user.avatar.includes("https")
-                            //   ?
-                            user.avatar
-                            // : require("../../../backend/users/" + user.avatar)
-                          }
-                          className="rounded-circle bg-light"
-                          alt=""
-                          width="60px"
-                          height="60px"
-                          style={{ objectFit: "cover" }}
-                        />
-                        <input
-                          type="file"
-                          className="form-control shadow-none d-inline-block w-auto"
-                          id="avatar"
-                          name="avatar"
-                          onChange={handlePhoto}
-                          placeholder="New York, USA, etc.."
-                        />
-                      </div>
                     </div>
                   </div>
                 </div>

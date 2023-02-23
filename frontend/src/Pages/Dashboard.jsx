@@ -8,7 +8,6 @@ import Nav from "../Components/Nav";
 const Dashboard = () => {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
-  const [likes, setLikes] = useState(0);
 
   const user = useContext(UserContext);
 
@@ -22,7 +21,6 @@ const Dashboard = () => {
       );
       setPosts(response.data.post);
       setComments(response.data.comments);
-      setLikes(response.data.likes);
     } catch (error) {
       console.log(error);
     }
@@ -55,12 +53,6 @@ const Dashboard = () => {
       <div className="container my-5 py-5">
         <h2 className="fs-2 text-dark fw-bolder">Dashboard</h2>
         <div className="row mt-5">
-          <div className="col-md-4 mb-2">
-            <div className=" bg-white border rounded p-4">
-              <div className="fs-2 text-dark fw-bolder">{likes}</div>
-              <span className="text-secondary">Total post likes</span>
-            </div>
-          </div>
           <div className="col-md-4 mb-2">
             <div className=" bg-white border rounded p-4">
               <div className="fs-2 text-dark fw-bolder">{comments}</div>
@@ -98,16 +90,8 @@ const Dashboard = () => {
                         <div className="d-flex justify-content-between align-items-center h-100">
                           <div className="d-flex gap-3 text-secondary">
                             <span className="bg-transparent border-0">
-                              <i className="fa-regular fa-heart pe-1"></i>
-                              <span>{post.likes.length}</span>
-                            </span>
-                            <span className="bg-transparent border-0">
                               <i className="fa-regular fa-comment pe-1"></i>
                               <span>{post.comments.length}</span>
-                            </span>
-                            <span className="bg-transparent border-0">
-                              <i className="fa-regular fa-bookmark pe-1"></i>
-                              <span>0</span>
                             </span>
                           </div>
                           <div className="d-flex gap-3">

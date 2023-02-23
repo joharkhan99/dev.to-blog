@@ -76,44 +76,8 @@ const NewBlog = () => {
   ];
 
   // FORM HANDLING
-  const [userUploadedImage, setuserUploadedImage] = useState(false);
-  const [imagePreviewClass, setimagePreviewClass] = useState("d-none");
-  const [imagePreviewSrc, setimagePreviewSrc] = useState(null);
-  const [coverImage, setCoverImage] = useState("");
   const [title, settitle] = useState("");
   const [value, setValue] = useState("");
-
-  const handlePhoto = (e) => {
-    setCoverImage(e.target.files[0]);
-    console.log(e.target.files[0]);
-    if (e.target.files[0]) {
-      setuserUploadedImage(true);
-      setimagePreviewClass("");
-
-      const reader = new FileReader();
-      reader.onload = () => {
-        setimagePreviewSrc(reader.result);
-      };
-      reader.readAsDataURL(e.target.files[0]);
-    } else {
-      setuserUploadedImage(false);
-      setimagePreviewClass("d-none");
-    }
-  };
-
-  const uploadcoverimage = async () => {
-    try {
-      const formData = new FormData();
-      formData.append("coverimage", coverImage);
-      const res = await axios.post(
-        `${process.env.REACT_APP_API_URL}/api/posts/upload`,
-        formData
-      );
-      return res.data;
-    } catch (error) {
-      console.log(error);
-    }
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -126,64 +90,33 @@ const NewBlog = () => {
     }
 
     const url = `${process.env.REACT_APP_API_URL}/api/posts/create`;
-    if (userUploadedImage) {
-      var postimage = await uploadcoverimage();
-      await axios
-        .post(
-          url,
-          {
-            title: title,
-            tags: tags,
-            body: value,
-            image: `${process.env.REACT_APP_API_URL}/posts/${postimage}`,
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          if (res.data.error) {
-            toast.success(res.data.message, { type: "error" });
-          } else {
-            toast.success("Post Published Successfully", {
-              type: "success",
-              autoClose: 500,
-            });
-            setTimeout(() => {
-              window.location.href = `/${res.data.username}/${res.data.post.titleURL}`;
-            }, 800);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      await axios
-        .post(
-          url,
-          {
-            title: title,
-            tags: tags,
-            body: value,
-            image: "",
-          },
-          { withCredentials: true }
-        )
-        .then((res) => {
-          if (res.data.error) {
-            toast.success(res.data.message, { type: "error" });
-          } else {
-            toast.success("Post Published Successfully", {
-              type: "success",
-              autoClose: 500,
-            });
-            setTimeout(() => {
-              window.location.href = `/${res.data.username}/${res.data.post.titleURL}`;
-            }, 800);
-          }
-        })
-        .catch((err) => {
-          console.log(err);
-        });
-    }
+    await axios
+      .post(
+        url,
+        {
+          title: title,
+          tags: tags,
+          body: value,
+          image: "",
+        },
+        { withCredentials: true }
+      )
+      .then((res) => {
+        if (res.data.error) {
+          toast.success(res.data.message, { type: "error" });
+        } else {
+          toast.success("Post Published Successfully", {
+            type: "success",
+            autoClose: 500,
+          });
+          setTimeout(() => {
+            window.location.href = `/${res.data.username}/${res.data.post.titleURL}`;
+          }, 800);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
   };
 
   return (
@@ -200,7 +133,7 @@ const NewBlog = () => {
                   height="40"
                 />
               </Link>
-              <span className="fw-bold">Create Post</span>
+              <span className="fw-bold">Ask a Question</span>
             </div>
 
             <div className="d-flex justify-content-end align-items-center gap-2">
@@ -259,25 +192,10 @@ const NewBlog = () => {
                 <form encType="multipart/form-data" onSubmit={handleSubmit}>
                   <div className="card px-md-4">
                     <div className="card-body">
-                      <div>
-                        <label
-                          htmlFor="formFileLg"
-                          className="form-label fw-bold"
-                        >
-                          Add cover image
-                        </label>
-                        <input
-                          className="form-control form-control-md w-auto shadow-none"
-                          id="coverImage"
-                          name="coverImage"
-                          onChange={handlePhoto}
-                          type="file"
-                        />
-                      </div>
                       <div className="my-3">
                         <textarea
                           name="text"
-                          placeholder="New post title here..."
+                          placeholder="Enter you Question Title"
                           className="fw-bolder shadow-none fs-1 text-dark form-control border-0"
                           value={title}
                           onInput={(e) => {
@@ -303,20 +221,27 @@ const NewBlog = () => {
                           )}
                       </div>
                       <div className="my-3">
+                        <label
+                          className="text-muted"
+                          style={{ fontSize: "12px" }}
+                        >
+                          Include all the information someone would need to
+                          answer your question
+                        </label>
                         <ReactQuill
                           theme="snow"
                           value={value}
                           onChange={setValue}
                           modules={quillmodules}
                           formats={formats}
-                          placeholder="Write your post content here..."
+                          placeholder="Write your Question body..."
                         />
                       </div>
                     </div>
                   </div>
                   <div className="btns mt-3">
                     <button className="btn btn-primary fw-bold" type="submit">
-                      Publish
+                      Post your Question
                     </button>
                   </div>
                 </form>
@@ -328,17 +253,6 @@ const NewBlog = () => {
                 aria-labelledby="preview-tab"
               >
                 <div className="card w-100 overflow-hidden px-md-0">
-                  <div
-                    className={"card-header p-0 " + imagePreviewClass}
-                    style={{ height: "275px" }}
-                  >
-                    <img
-                      src={imagePreviewSrc}
-                      className="card-img-top w-100 h-100"
-                      style={{ objectFit: "cover" }}
-                      alt="..."
-                    />
-                  </div>
                   <div className="card-body bg-white p-lg-5">
                     <div className="post-details mb-5">
                       <h1 className="fw-bolder fs-1 py-3 text-dark">{title}</h1>

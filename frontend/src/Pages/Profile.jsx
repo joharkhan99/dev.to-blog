@@ -11,7 +11,6 @@ const Profile = () => {
   const [posts, setPosts] = useState([]);
   const [comments, setComments] = useState([]);
   const [profileUser, setProfileUser] = useState([]);
-  const [likes, setLikes] = useState(0);
 
   const getUserProfile = async () => {
     try {
@@ -20,8 +19,6 @@ const Profile = () => {
       setPosts(response.data.post);
       setComments(response.data.comments);
       setProfileUser(response.data.author);
-      setLikes(response.data.likes);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }
@@ -122,10 +119,6 @@ const Profile = () => {
                       <i className="fa-regular fa-comment text-secondary fs-5"></i>
                       <span>{comments.length} comments written</span>
                     </div>
-                    <div className="d-flex align-items-center gap-3 mb-3">
-                      <i className="fa-regular fa-heart text-secondary fs-5"></i>
-                      <span>{likes} reactions</span>
-                    </div>
                   </div>
                 </div>
               </div>
@@ -213,10 +206,6 @@ const Profile = () => {
                               className="d-flex gap-3"
                               style={{ fontSize: "14px" }}
                             >
-                              <span className="text-decoration-none text-dark bg-light px-2 py-1 rounded">
-                                <i className="fa-regular fa-heart pe-1"></i>
-                                {post.likes.length} reactions
-                              </span>
                               <span
                                 href="as"
                                 className="text-decoration-none text-dark bg-light px-2 py-1 rounded"

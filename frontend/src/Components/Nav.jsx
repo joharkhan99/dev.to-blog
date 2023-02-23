@@ -65,7 +65,7 @@ const Nav = () => {
             ) : (
               <>
                 <Link to="/new" className="btn btn-outline-primary fw-bold">
-                  Create Post
+                  Ask a Question
                 </Link>
                 <a
                   href="as"

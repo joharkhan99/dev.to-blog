@@ -152,18 +152,6 @@ function Tag() {
                                 }
                                 className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
                               >
-                                <i className="fa-regular fa-heart pe-1"></i>
-                                {post.likes.length} reactions
-                              </Link>
-                              <Link
-                                to={
-                                  "/" +
-                                  post.author.username +
-                                  "/" +
-                                  post.titleURL
-                                }
-                                className="text-decoration-none text-dark bg-light px-2 py-1 rounded"
-                              >
                                 <i className="fa-regular fa-comment pe-1"></i>
                                 {post.comments.length} comments
                               </Link>
