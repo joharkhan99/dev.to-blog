@@ -49,27 +49,6 @@ function Tag() {
                       className="card w-100 overflow-hidden mb-2"
                       key={post._id}
                     >
-                      {post.image !== "" ? (
-                        <div
-                          className="card-header p-0"
-                          style={{ height: "275px" }}
-                        >
-                          <Link
-                            to={
-                              "/" + post.author.username + "/" + post.titleURL
-                            }
-                          >
-                            <img
-                              src={post.image}
-                              className="card-img-top w-100 h-100"
-                              style={{ objectFit: "cover" }}
-                              alt="..."
-                            />
-                          </Link>
-                        </div>
-                      ) : (
-                        ""
-                      )}
                       <div className="card-body bg-white">
                         <div className="d-flex gap-2 align-items-center">
                           <Link

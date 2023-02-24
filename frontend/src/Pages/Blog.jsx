@@ -151,18 +151,6 @@ function Blog() {
           <div className="row pt-4">
             <div className="col-xl-9 col-lg-9 col-md-9 col-sm-12 col-xs-12 mb-4">
               <div className="card w-100 overflow-hidden mb-2">
-                {post.image !== "" ? (
-                  <div className="card-header p-0" style={{ height: "275px" }}>
-                    <img
-                      src={post.image}
-                      className="card-img-top w-100 h-100"
-                      style={{ objectFit: "cover" }}
-                      alt={post.title}
-                    />
-                  </div>
-                ) : (
-                  ""
-                )}
                 <div className="card-body bg-white p-lg-5 pt-4">
                   <div className="d-flex gap-2 align-items-center">
                     <Link
@@ -227,6 +215,13 @@ function Blog() {
                       Comments ({post.comments.length})
                     </h3>
 
+                    {/* <Link
+                        to="/signup"
+                        className="d-block fw-bold text-center my-4 py-3 bg-light rounded text-decoration-none"
+                      >
+                        Sign in or Create an Account to Leave a Comment
+                      </Link> */}
+
                     {user !== null && user !== undefined ? (
                       <div className="d-flex gap-2 mt-4">
                         <div style={{ width: "30px", height: "30px" }}>
@@ -259,12 +254,63 @@ function Blog() {
                         </div>
                       </div>
                     ) : (
-                      <Link
-                        to="/signup"
-                        className="d-block fw-bold text-center my-4 py-3 bg-light rounded text-decoration-none"
-                      >
-                        Sign in or Create an Account to Leave a Comment
-                      </Link>
+                      <>
+                        <textarea
+                          className="form-control d-block w-100 shadow-none mt-5 bg-white"
+                          rows={5}
+                          placeholder="Add to Discussion"
+                          data-bs-toggle="modal"
+                          data-bs-target="#exampleModal"
+                          disabled
+                        ></textarea>
+                        <div
+                          class="modal fade"
+                          id="exampleModal"
+                          tabindex="-1"
+                          aria-labelledby="exampleModalLabel"
+                          aria-hidden="true"
+                        >
+                          <div class="modal-dialog modal-dialog-centered">
+                            <div class="modal-content">
+                              <div class="modal-header">
+                                <h5 class="modal-title" id="exampleModalLabel">
+                                  Log in to continue
+                                </h5>
+                                <button
+                                  type="button"
+                                  class="btn-close"
+                                  data-bs-dismiss="modal"
+                                  aria-label="Close"
+                                ></button>
+                              </div>
+                              <div class="modal-body">
+                                We're a place where coders share, stay
+                                up-to-date and grow their careers.
+                              </div>
+                              <div class="modal-footer border-0 text-center d-block">
+                                <button
+                                  onClick={(e) => {
+                                    window.location.href = "/login";
+                                  }}
+                                  class="btn btn-primary fw-bold w-75"
+                                  data-bs-dismiss="modal"
+                                  // to="/login"
+                                >
+                                  Log in
+                                </button>
+                                <button
+                                  class="btn btn-outline-light text-primary fw-bold w-75"
+                                  onClick={(e) => {
+                                    window.location.href = "/signup";
+                                  }}
+                                >
+                                  Create account
+                                </button>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </>
                     )}
 
                     <div className="comments mt-5">
