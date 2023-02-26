@@ -12,7 +12,6 @@ function Relevant() {
       const url = `${process.env.REACT_APP_API_URL}/api/posts/relevant`;
       const response = await axios.get(url);
       setPosts(response.data);
-      console.log(response.data);
     } catch (error) {
       console.log(error);
     }

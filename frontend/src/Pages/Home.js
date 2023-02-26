@@ -5,7 +5,6 @@ import Nav from "../Components/Nav";
 import Relevant from "./Relevant";
 
 const Home = () => {
-  const user = useContext(UserContext);
   return (
     <>
       <Nav />

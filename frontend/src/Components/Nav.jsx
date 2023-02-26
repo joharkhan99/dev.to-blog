@@ -1,12 +1,38 @@
-import React, { useContext } from "react";
+import axios from "axios";
+import React, { useContext, useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import { UserContext } from "../App";
 
 const Nav = () => {
+  const [notifications, setNotifications] = useState(0);
   const logout = () => {
     window.open(`${process.env.REACT_APP_API_URL}/api/auth/logout`, "_self");
   };
   const user = useContext(UserContext);
+  const getTotalNotif = async (user) => {
+    try {
+      const url = `${process.env.REACT_APP_API_URL}/api/posts/totalnotifications`;
+      await axios
+        .post(url, { user: user }, { withCredentials: true })
+        .then((res) => {
+          if (res.data.error) {
+            console.log(res.data.message);
+          } else {
+            setNotifications(res.data);
+          }
+        })
+        .catch((err) => {
+          console.log(err);
+        });
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
+  useEffect(() => {
+    getTotalNotif(user);
+  }, [user]);
+
   return (
     <div className="container-fluid border-bottom bg-white fixed-top">
       <nav className="navbar">
@@ -67,21 +93,25 @@ const Nav = () => {
                 <Link to="/new" className="btn btn-outline-primary fw-bold">
                   Ask a Question
                 </Link>
-                <a
-                  href="as"
+                <Link
+                  to="/notification"
                   className="btn btn-outline-primary border-white position-relative"
                 >
                   <i className="fa-regular fa-bell text-dark fs-4"></i>
-                  <span
-                    className="badge text-white bg-danger position-absolute top-0 start-50 px-1"
-                    style={{
-                      paddingTop: "2px",
-                      paddingBottom: "2px",
-                    }}
-                  >
-                    9
-                  </span>
-                </a>
+                  {notifications > 0 ? (
+                    <span
+                      className="badge text-white bg-danger position-absolute top-0 start-50 px-1"
+                      style={{
+                        paddingTop: "2px",
+                        paddingBottom: "2px",
+                      }}
+                    >
+                      {notifications}
+                    </span>
+                  ) : (
+                    ""
+                  )}
+                </Link>
                 <div className="dropdown">
                   <button
                     className="border-0 bg-transparent p-0"

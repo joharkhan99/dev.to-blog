@@ -10,9 +10,11 @@ import {
   getAllPost,
   getAllTopPost,
   getEditPost,
+  getNotifications,
   getPost,
   getTagPosts,
   getTags,
+  totalNotifications,
 } from "../controllers/posts.js";
 import multer from "multer";
 
@@ -38,6 +40,8 @@ router.get("/relevant", getAllPost);
 router.get("/latest", getAllLatestPost);
 router.get("/top", getAllTopPost);
 router.post("/create", addPost);
+router.post("/totalnotifications", totalNotifications);
+router.post("/notificationsdata", getNotifications);
 router.post("/edit", editPost);
 router.post("/delete", DeletePost);
 router.post("/comment", addComment);

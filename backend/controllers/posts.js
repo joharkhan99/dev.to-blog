@@ -93,7 +93,6 @@ export const getPost = async (req, res) => {
       const comments = await Comment.find({ post: post._id })
         .populate("author", "name username avatar role")
         .sort({ date: -1 });
-      console.log(comments);
       res.json({ post, author, comments });
     } else {
       res.status(500).json({ message: "Something went wrong" });
@@ -239,6 +238,54 @@ export const addPost = async (req, res) => {
         return res.json({ post, username: author.username });
       }
     });
+  } else {
+    res.json({ error: true, message: "Not Authorized" });
+  }
+};
+
+export const totalNotifications = async (req, res) => {
+  if (req.user && req.body.user) {
+    const id = req.body.user._id;
+
+    var now = new Date();
+    var startOfToday = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+
+    const userPosts = await Post.find({ author: id });
+    const comments = await Comment.find({
+      post: { $in: userPosts.map((post) => post._id) },
+      author: { $ne: id },
+      date: { $gte: startOfToday },
+    }).populate("author", "username name avatar");
+    return res.json(comments.length);
+  } else {
+    res.json({ error: true, message: "Not Authorized" });
+  }
+};
+
+export const getNotifications = async (req, res) => {
+  if (req.user && req.body.user) {
+    const id = req.body.user._id;
+
+    var now = new Date();
+    var startOfToday = new Date(
+      now.getFullYear(),
+      now.getMonth(),
+      now.getDate()
+    );
+
+    const userPosts = await Post.find({ author: id });
+    const comments = await Comment.find({
+      post: { $in: userPosts.map((post) => post._id) },
+      author: { $ne: id },
+    })
+      .populate("author", "username name avatar role")
+      .populate("post", "title titleURL")
+      .sort({ date: -1 });
+    return res.json(comments);
   } else {
     res.json({ error: true, message: "Not Authorized" });
   }

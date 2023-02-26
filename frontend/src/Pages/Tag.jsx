@@ -16,7 +16,6 @@ function Tag() {
       const url = `${process.env.REACT_APP_API_URL}/api/posts/tag/${tag}`;
       const response = await axios.get(url);
       setPosts(response.data);
-      console.log(response);
     } catch (error) {
       console.log(error);
     }
